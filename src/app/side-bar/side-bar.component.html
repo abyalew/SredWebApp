@@ -1,0 +1,38 @@
+<mat-sidenav-container>
+    <mat-sidenav mode="side" opened #sidenav>
+
+        <img src="Loogoo.png" alt="SredIo logo"/>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar>
+            <button mat-icon-button class="example-icon" aria-label="toggle side nav" (click)="sidenav.toggle()">
+              <mat-icon>menu</mat-icon>
+            </button>
+            <mat-form-field class="search-field" appearance="outline" subscriptSizing="dynamic">
+                <input matInput placeholder="Search">
+            </mat-form-field>
+            
+            <span class="toolbar-spacer"></span>
+            <div class="notification-container">
+                <button mat-fab>
+                    <mat-icon  matBadge="2">mail</mat-icon>
+                </button>
+                
+                <button mat-fab class="notification-button">
+                    <mat-icon type="outlined"  matBadge="8">notifications</mat-icon>
+                </button>
+            </div>
+            <!-- <span class="vertical-separator"></span> -->
+            <mat-divider [vertical]="true"></mat-divider>
+
+
+            <sred-date-range-picker></sred-date-range-picker>
+
+
+          </mat-toolbar>
+
+          <div class="main-page-container">
+            <router-outlet />
+          </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

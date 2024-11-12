@@ -1,4 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+    margin: 0; font-family: Roboto, "Manrope", sans-serif; background: #F7F9FB;
+    --mdc-outlined-card-container-color: #fff;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.semibold-heading-5 {
+    font-family: 'Manrope';
+    font-weight: 600;
+    font-size: 28px;
+    line-height: normal;
+}
+
+.medium-text-sm {
+    font-family: 'Manrope';
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0%;
+}
+
+.main-page-container {
+    padding: 32px;
+}
+
+.chart-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .chart-container {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+  }
+  .child-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
