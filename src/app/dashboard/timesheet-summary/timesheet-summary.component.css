@@ -1,0 +1,17 @@
+.status-detail{
+    display: flex;
+    flex-direction: row;
+}
+.positive-status {
+    background-color: #E9F8EE; 
+    color: #53AF57;
+    display: flex;
+    align-items: center;
+    border: solid;
+    border-width: 0;
+    border-radius: 2px;
+}
+
+.timesheet-card {
+    height: 94px;
+}
