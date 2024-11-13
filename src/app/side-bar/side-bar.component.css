@@ -35,3 +35,7 @@ mat-toolbar {
     border-width: 1px;
     margin: 0 17px;
 }
+
+.sidebar-section {
+    margin-bottom: 45px;
+}

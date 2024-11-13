@@ -1,8 +1,9 @@
 <mat-sidenav-container>
     <mat-sidenav mode="side" opened #sidenav>
 
-        <img src="Loogoo.png" alt="SredIo logo"/>
+        <img src="Loogoo.png" alt="SredIo logo" class="sidebar-section"/>
 
+        <app-user-profile class="sidebar-section"></app-user-profile>
         <mat-list>
             <div mat-subheader>GENERAL</div>
               <mat-list-item>
@@ -44,7 +45,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <mat-toolbar>
-            <button mat-icon-button class="example-icon" aria-label="toggle side nav" (click)="sidenav.toggle()">
+            <button mat-icon-button aria-label="toggle side nav" (click)="sidenav.toggle()">
               <mat-icon>menu</mat-icon>
             </button>
             <mat-form-field class="search-field" appearance="outline" subscriptSizing="dynamic">
@@ -52,16 +53,9 @@
             </mat-form-field>
             
             <span class="toolbar-spacer"></span>
-            <div class="notification-container">
-                <button mat-fab>
-                    <mat-icon  matBadge="2">mail</mat-icon>
-                </button>
-                
-                <button mat-fab class="notification-button">
-                    <mat-icon type="outlined"  matBadge="8">notifications</mat-icon>
-                </button>
-            </div>
-            <!-- <span class="vertical-separator"></span> -->
+            <app-toolbar-icon icon="mail_outlined" [badge]="2"></app-toolbar-icon>
+            <app-toolbar-icon icon="notifications_outlined" [badge]="8"></app-toolbar-icon>
+            
             <mat-divider [vertical]="true"></mat-divider>
 
 

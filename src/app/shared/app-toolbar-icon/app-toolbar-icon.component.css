@@ -1,0 +1,19 @@
+.app-toolbar-Action {
+    height: 36px;
+    width: 36px;
+    padding: 6px;
+    background-color: #EEF7FF;
+    color: #454545;
+    border:none;
+    border-radius: 9px;
+    margin-right: 17px;
+}
+
+.app-toolbar-Action-Icon {
+    height: 18px;
+    height: 22px;
+}
+
+.app-toolbar-Action-Icon::ng-deep .mat-badge-content { 
+    background-color: #EA3030;
+}
