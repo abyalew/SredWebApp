@@ -1,0 +1,34 @@
+.date-range-form-field {
+    width: 100%;
+    height: 56px; 
+    --mdc-outlined-text-field-focus-outline-color: #1A71F6;
+    --mdc-outlined-text-field-hover-outline-color: #1A71F6;
+    --mdc-outlined-text-field-outline-color: #D1D1D1;
+    /* --mdc-filled-text-field-focus-label-text-color: */
+    --mdc-outlined-text-field-container-shape: 8px;
+    --mat-form-field-container-height: 30px;
+    /* --mat-form-field-container-vertical-padding: 4px; */
+    padding-top: 16px;
+    padding-bottom: 2px !important;
+    --mdc-outlined-text-field-input-text-placeholder-color: #949494;
+    --mdc-outlined-text-field-input-text-color: 454545;
+    --mdc-outlined-text-field-label-text-color: #949494;
+    --mdc-outlined-text-field-label-text-size: 14px;
+    --mat-form-field-container-text-size: 14px;
+    --mat-form-field-container-text-weight: bold;
+  }
+
+  .date-range-form-field .mat-form-field-label { 
+        top: 0; 
+        left: 0; 
+        transform: translateY(0) !important; 
+        font-size: 1rem !important; 
+        line-height: 1.5 !important; 
+        padding: 0 8px; 
+        background: white; 
+        display: inline-block;
+  }
+
+  .date-range-form-field .mat-form-field-outline-gap { display: none !important; } 
+  .date-range-form-field .mat-form-field-outline { top: 0; height: 100%; } 
+  .date-range-form-field .mat-form-field-infix { padding: 0; }

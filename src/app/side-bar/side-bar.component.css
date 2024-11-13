@@ -23,6 +23,7 @@ mat-toolbar {
     flex-wrap: nowrap;
 }
 
+
 .notification-button{
     margin-left: 17px;
 }
@@ -38,4 +39,23 @@ mat-toolbar {
 
 .sidebar-section {
     margin-bottom: 45px;
+}
+
+.sred-side-nav-item {
+    width: 248px;
+    height: 40px !important;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    cursor: pointer !important;
+}
+
+.sred-side-nav-item:hover {
+    background: #F6FBFF;
+    border-radius: 8px;
+}
+
+.sred-side-nav-item-active {
+    background: #D9EDFF !important;
+    border-radius: 12px;
 }

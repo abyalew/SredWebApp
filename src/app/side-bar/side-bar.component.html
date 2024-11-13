@@ -6,40 +6,40 @@
         <app-user-profile class="sidebar-section"></app-user-profile>
         <mat-list>
             <div mat-subheader>GENERAL</div>
-              <mat-list-item>
-                <mat-icon matListItemIcon>home</mat-icon>
+              <mat-list-item class="sred-side-nav-item text-sm sred-side-nav-item-active">
+                <mat-icon matListItemIcon>home_outlined</mat-icon>
                 <div matListItemTitle>Overview</div>
               </mat-list-item>
-              <mat-list-item>
+              <mat-list-item class="sred-side-nav-item text-sm">
                 <mat-icon matListItemIcon>home</mat-icon>
                 <div matListItemTitle>Navigation 02</div>
               </mat-list-item>
-              <mat-list-item>
+              <mat-list-item class="sred-side-nav-item text-sm">
                 <mat-icon matListItemIcon>home</mat-icon>
                 <div matListItemTitle>Navigation 03</div>
               </mat-list-item>
-              <mat-list-item>
+              <mat-list-item class="sred-side-nav-item text-sm">
                 <mat-icon matListItemIcon>home</mat-icon>
                 <div matListItemTitle>Navigation 04</div>
               </mat-list-item>
-              <mat-list-item>
+              <mat-list-item class="sred-side-nav-item text-sm">
                 <mat-icon matListItemIcon>home</mat-icon>
                 <div matListItemTitle>Navigation 06</div>
               </mat-list-item>
               
             <div mat-subheader>TOOLS</div>
-              <mat-list-item>
+              <mat-list-item class="sred-side-nav-item text-sm">
                 <mat-icon matListItemIcon>settings_outlined</mat-icon>
                 <div matListItemTitle>Account & Settings</div>
               </mat-list-item>
-              <mat-list-item>
+              <mat-list-item class="sred-side-nav-item text-sm">
                 <mat-icon matListItemIcon>settings_outlined</mat-icon>
                 <div matListItemTitle>Help</div>
               </mat-list-item>
-              <mat-list-item>
+              <mat-list-item class="sred-side-nav-item text-sm">
                 <mat-icon matListItemIcon>dark_mode</mat-icon>
-                <div >Dark Mode</div>
-                <mat-slide-toggle matSuffix></mat-slide-toggle>
+                <span >Dark Mode</span>
+                <mat-slide-toggle matSuffix style="right: 0; margin-right: 0;"></mat-slide-toggle>
               </mat-list-item>
           </mat-list>
     </mat-sidenav>
@@ -49,7 +49,10 @@
               <mat-icon>menu</mat-icon>
             </button>
             
-            <app-search-input style="width: 300px;"></app-search-input>
+            <div style="width: 300px;">
+                <app-search-input style="width: 300px; margin-left:32px;"></app-search-input>
+            </div>
+            
             <span class="toolbar-spacer"></span>
             <app-toolbar-icon icon="mail_outlined" [badge]="2"></app-toolbar-icon>
             <app-toolbar-icon icon="notifications_outlined" [badge]="8"></app-toolbar-icon>

@@ -7,6 +7,7 @@
     border:none;
     border-radius: 9px;
     margin-right: 17px;
+    cursor: pointer;
 }
 
 .app-toolbar-Action-Icon {
