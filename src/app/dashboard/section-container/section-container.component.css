@@ -1,4 +1,5 @@
 mat-card.dashboard-section {
     margin-bottom: 24px;
+    border: none;
     --mdc-outlined-card-container-color: #fff;
 }

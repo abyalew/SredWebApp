@@ -35,19 +35,18 @@ export class OverallHoursComponent {
           innerLabels: [
             {
               text: "Total Hours",
-              fontFamily: "Plus Jakarta Sans",
               fontSize: 12,
               fontWeight: "bold",
               color: "#000"
             },
             {
               text: "$1,000",
-              fontFamily: "Plus Jakarta Sans",
               fontSize: 14,
               fontWeight: "bold",
               color: "#000"
             },
           ],
+          fills: ['#03BCF3', '#091836']
         },
       ],
       background: {
@@ -62,12 +61,14 @@ export class OverallHoursComponent {
             xKey: "month",
             yKey: "cumulativehours",
             yName: "Cumulative Hours",
+            fill: "#03BCF3"
           },
           {
             type: "bar",
             xKey: "month",
             yKey: "tootalHours",
             yName: "Tootal Hours",
+            fill: "#091836"
           }
         ],
         background: {

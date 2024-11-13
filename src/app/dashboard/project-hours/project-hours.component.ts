@@ -34,7 +34,7 @@ export class ProjectHoursComponent {
         xKey: "name",
         yKey: "totalHours",
         yName: "Total Hours",
-      }
+      },
     ],
     background: {
       fill: "#FBFBFB",
