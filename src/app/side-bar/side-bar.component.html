@@ -4,7 +4,7 @@
         <img src="Loogoo.png" alt="SredIo logo" class="sidebar-section"/>
 
         <app-user-profile class="sidebar-section"></app-user-profile>
-        <mat-list>
+        <mat-list class="side-nav-menu-list">
             <div mat-subheader>GENERAL</div>
               <mat-list-item class="sred-side-nav-item text-sm sred-side-nav-item-active">
                 <mat-icon matListItemIcon>home_outlined</mat-icon>
@@ -39,9 +39,16 @@
               <mat-list-item class="sred-side-nav-item text-sm">
                 <mat-icon matListItemIcon>dark_mode</mat-icon>
                 <span >Dark Mode</span>
-                <mat-slide-toggle matSuffix style="right: 0; margin-right: 0;"></mat-slide-toggle>
+                <mat-slide-toggle style="float: right;"></mat-slide-toggle>
               </mat-list-item>
           </mat-list>
+
+          <mat-card appearance="outlined" class="help-card">
+            <mat-card-content class="help-card-content">
+                <div class="heading-6">Need Assistance?</div>
+                <p>For Report, Support or Suggestions, Please reach out to <a> {{"success@sred.io"}}</a></p>
+            </mat-card-content>
+          </mat-card>
     </mat-sidenav>
     <mat-sidenav-content>
         <mat-toolbar>

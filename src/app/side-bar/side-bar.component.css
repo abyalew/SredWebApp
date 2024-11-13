@@ -59,3 +59,22 @@ mat-toolbar {
     background: #D9EDFF !important;
     border-radius: 12px;
 }
+
+.side-nav-menu-list {
+    margin-bottom: 45px;
+}
+
+.help-card {
+    height: 148px;
+    width: 100%;
+    background: #292929;
+}
+
+.help-card-content {
+    padding: 22px !important;
+    color: #fff;
+}
+
+.help-card-content > p > a {
+    color: #03BCF3;
+}

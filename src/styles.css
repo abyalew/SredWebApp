@@ -4,7 +4,7 @@
 html, body { height: 100%; }
 body { 
     margin: 0; font-family: Roboto, "Manrope", sans-serif; background: #F7F9FB;
-    --mdc-outlined-card-container-color: #fff;
+    
 }
 
 .spacer {
@@ -41,6 +41,14 @@ body {
     letter-spacing: 0%;
 }
 
+
+.heading-6 {
+    font-weight: 900px;
+    font-size: 22px;
+    line-height: 130%;
+    letter-spacing: 0%;
+}
+
 .text-xs-bold {
     font-family: 'Plus Jakarta Sans';
     font-weight: bold;
@@ -70,11 +78,11 @@ body {
     flex-direction: column;
     width: 100%;
     height: 100%;
+    background-color: #FBFBFB !important;
+    border-color: #E3E3E3 !important;
 }
 
-.dashboard-section {
-    margin-bottom: 24px;
-}
+
 .filter-section {
     display: flex;
     flex-direction: row;

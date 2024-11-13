@@ -50,6 +50,9 @@ export class OverallHoursComponent {
           ],
         },
       ],
+      background: {
+        fill: "#FBFBFB",
+      },
     };
     this.barChartOptions = {
         data: this.getBarChartData(),
@@ -67,7 +70,11 @@ export class OverallHoursComponent {
             yName: "Tootal Hours",
           }
         ],
+        background: {
+          fill: "#FBFBFB",
+        },
     };
+
   }
 
   getBarChartData() {

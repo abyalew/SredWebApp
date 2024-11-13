@@ -36,6 +36,9 @@ export class ProjectHoursComponent {
         yName: "Total Hours",
       }
     ],
+    background: {
+      fill: "#FBFBFB",
+    },
   }
   
  }

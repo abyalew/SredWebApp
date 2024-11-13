@@ -9,6 +9,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { RouterOutlet } from '@angular/router';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { SredDateRangePicker } from '../shared/date-range-picker/date-range-picker.component';
@@ -20,7 +21,7 @@ import { SearchInputComponent } from '../shared/search-input/search-input.compon
   selector: 'app-side-bar',
   standalone: true,
   imports: [RouterOutlet, MatSidenavModule, MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule, MatFormFieldModule, SredDateRangePicker, MatBadgeModule,
-    MatDividerModule, MatListModule, MatSlideToggleModule, UserProfileComponent, AppToolbarIconComponent, SearchInputComponent],
+    MatDividerModule, MatListModule, MatSlideToggleModule, UserProfileComponent, AppToolbarIconComponent, SearchInputComponent, MatCardModule],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.css'
 })
