@@ -14,12 +14,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SredDateRangePicker } from '../shared/date-range-picker/date-range-picker.component';
 import { UserProfileComponent } from "../user-profile/user-profile.component";
 import { AppToolbarIconComponent } from '../shared/app-toolbar-icon/app-toolbar-icon.component';
+import { SearchInputComponent } from '../shared/search-input/search-input.component';
 
 @Component({
   selector: 'app-side-bar',
   standalone: true,
   imports: [RouterOutlet, MatSidenavModule, MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule, MatFormFieldModule, SredDateRangePicker, MatBadgeModule,
-    MatDividerModule, MatListModule, MatSlideToggleModule, UserProfileComponent, AppToolbarIconComponent],
+    MatDividerModule, MatListModule, MatSlideToggleModule, UserProfileComponent, AppToolbarIconComponent, SearchInputComponent],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.css'
 })

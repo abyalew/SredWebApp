@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { SearchInputComponent } from '../../shared/search-input/search-input.component';
 
 interface IRow {
   name: string;
@@ -20,7 +21,7 @@ interface IRow {
 @Component({
   selector: 'dashboard-employee-summary',
   standalone: true,
-  imports: [MatCardModule, AgGridAngular, MatGridListModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule],
+  imports: [MatCardModule, AgGridAngular, MatGridListModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, SearchInputComponent],
   templateUrl: './employee-summary.component.html',
   styleUrl: './employee-summary.component.css'
 })
