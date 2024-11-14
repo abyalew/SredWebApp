@@ -12,10 +12,10 @@ import {MatListModule} from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-import { SredDateRangePicker } from '../shared/date-range-picker/date-range-picker.component';
+import { SredDateRangePicker } from '../../shared/date-range-picker/date-range-picker.component';
 import { UserProfileComponent } from "../user-profile/user-profile.component";
-import { AppToolbarIconComponent } from '../shared/app-toolbar-icon/app-toolbar-icon.component';
-import { SearchInputComponent } from '../shared/search-input/search-input.component';
+import { AppToolbarIconComponent } from '../../shared/app-toolbar-icon/app-toolbar-icon.component';
+import { SearchInputComponent } from '../../shared/search-input/search-input.component';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -32,6 +32,14 @@ export class SideBarComponent {
     const iconRegistry = inject(MatIconRegistry);
     const sanitizer = inject(DomSanitizer);
     iconRegistry.addSvgIcon('panel-close', sanitizer.bypassSecurityTrustResourceUrl('/panel-close.svg'));
+    iconRegistry.addSvgIcon('help', sanitizer.bypassSecurityTrustResourceUrl('/help.svg'));
+    iconRegistry.addSvgIcon('home_outlined', sanitizer.bypassSecurityTrustResourceUrl('/home_outlined.svg'));
+    iconRegistry.addSvgIcon('line_chart', sanitizer.bypassSecurityTrustResourceUrl('/line_chart.svg'));
+    iconRegistry.addSvgIcon('setting', sanitizer.bypassSecurityTrustResourceUrl('/setting.svg'));
+    iconRegistry.addSvgIcon('store_outlined', sanitizer.bypassSecurityTrustResourceUrl('/store_outlined.svg'));
+    iconRegistry.addSvgIcon('user_group_outlined', sanitizer.bypassSecurityTrustResourceUrl('/user_group_outlined.svg'));
+    iconRegistry.addSvgIcon('dark_mode_outlined', sanitizer.bypassSecurityTrustResourceUrl('/dark_mode_outlined.svg'));
+    iconRegistry.addSvgIcon('paper', sanitizer.bypassSecurityTrustResourceUrl('/paper.svg'));
   }
 
 }

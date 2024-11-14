@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import { RefreshEventService } from '../../../services/refreshEvent.service';
+import { RefreshEventService } from '../../../../services/refreshEvent.service';
 
 @Component({
   selector: 'header',

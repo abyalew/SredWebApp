@@ -3,11 +3,11 @@ import {MatCardModule} from '@angular/material/card';
 import { AgCharts } from 'ag-charts-angular';
 import { AgChartOptions } from 'ag-charts-community';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { DashboardService, ProjectHour } from '../../../services/dashboard.service';
-import { DataLoader } from '../../../utility/dataLoader';
+import { DashboardService, ProjectHour } from '../../../../services/dashboard.service';
+import { DataLoader } from '../../../../utility/dataLoader';
 import { CommonModule } from '@angular/common';
-import { SpinnerComponent } from '../../shared/spinner/spinner.component';
-import { RefreshEventService } from '../../../services/refreshEvent.service';
+import { SpinnerComponent } from '../../../shared/spinner/spinner.component';
+import { RefreshEventService } from '../../../../services/refreshEvent.service';
 import { Subscription } from 'rxjs';
 
 export interface ChartData {
@@ -28,7 +28,7 @@ export class ProjectHoursComponent implements OnDestroy {
   public chartOptions: Signal<AgChartOptions>;
   refreshEventSubscription: Subscription;
  
- constructor(private dashboardService: DashboardService, refreshEventService: RefreshEventService) {
+ constructor(private readonly dashboardService: DashboardService, refreshEventService: RefreshEventService) {
   this.dataLoader = new DataLoader<ProjectHour[]>();
   this.refreshEventSubscription = refreshEventService.refreshObservable.subscribe(()=> {
     this.loadData();
@@ -61,7 +61,7 @@ export class ProjectHoursComponent implements OnDestroy {
   this.dataLoader.load(this.dashboardService.getProjectHours());
  }
 
- ngOnDestroy(): void {
-   this.refreshEventSubscription.unsubscribe();
- }
+  ngOnDestroy(): void {
+    this.refreshEventSubscription.unsubscribe();
+  }
 }

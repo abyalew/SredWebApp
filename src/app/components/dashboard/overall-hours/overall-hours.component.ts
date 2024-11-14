@@ -3,11 +3,11 @@ import {MatCardModule} from '@angular/material/card';
 import { AgCharts } from 'ag-charts-angular';
 import { AgChartOptions } from 'ag-charts-community';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { DashboardService, SimpleObject, TimesheetByMonth } from '../../../services/dashboard.service';
-import { DataLoader } from '../../../utility/dataLoader';
+import { DashboardService, SimpleObject, TimesheetByMonth } from '../../../../services/dashboard.service';
+import { DataLoader } from '../../../../utility/dataLoader';
 import { CommonModule } from '@angular/common';
-import { SpinnerComponent } from '../../shared/spinner/spinner.component';
-import { RefreshEventService } from '../../../services/refreshEvent.service';
+import { SpinnerComponent } from '../../../shared/spinner/spinner.component';
+import { FilterParam, RefreshEventService } from '../../../../services/refreshEvent.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -26,16 +26,17 @@ export class OverallHoursComponent implements OnDestroy {
   barChartDataLoader: DataLoader<TimesheetByMonth[]>;
   refreshEventSubscription: Subscription;
 
-  constructor(private dashboardService : DashboardService, refreshEventService: RefreshEventService) {
+  constructor(private readonly dashboardService : DashboardService, refreshEventService: RefreshEventService) {
 
     this.dataLoader = new DataLoader<SimpleObject[]>();
     this.barChartDataLoader = new DataLoader<TimesheetByMonth[]>();
 
-    this.refreshEventSubscription = refreshEventService.refreshObservable.subscribe(()=> {
-      this.loadData();
+    this.refreshEventSubscription = refreshEventService.refreshObservable.subscribe((filterParam)=> {
+      this.loadData(filterParam);
+      
     });
 
-    this.loadData();
+    this.loadData(undefined);
 
     this.chartOptions = computed(() : AgChartOptions => {
       const total = this.dataLoader.data()?.reduce((sum, curr) => sum + Number(curr.value), 0).toString() ?? "0";
@@ -117,8 +118,8 @@ export class OverallHoursComponent implements OnDestroy {
     });
   }
 
-  loadData() {
-    this.dataLoader.load(this.dashboardService.getTimesheetStatus());
+  loadData(filterParam: FilterParam | undefined) {
+    this.dataLoader.load(this.dashboardService.getTimesheetStatus(filterParam?.dateFrom, filterParam?.dateTo));
     this.barChartDataLoader.load(this.dashboardService.getTimesheetStatusByMonth());
   }
 

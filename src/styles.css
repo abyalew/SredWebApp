@@ -6,6 +6,7 @@
     --mdc-outlined-button-container-shape : 8px;
     --mdc-text-button-container-shape : 8px;
     --mdc-outlined-button-outline-color: #D1D1D1;
+    --mat-datepicker-calendar-container-background-color: #fff;
 }
 
 html, body { height: 100%; }

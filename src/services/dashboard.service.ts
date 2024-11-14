@@ -9,8 +9,10 @@ import { Observable } from 'rxjs';
 export class DashboardService {
     constructor(private httpClient : HttpClient){}
 
-    getTimesheetStatus() : Observable<SimpleObject[]> {
-        return this.httpClient.get<SimpleObject[]>("https://localhost:7059/Dashboard/GetTimesheetStatus");
+    getTimesheetStatus(datefrom: Date | undefined, dateTo: Date | undefined) : Observable<SimpleObject[]> {
+        return this.httpClient.get<SimpleObject[]>("https://localhost:7059/Dashboard/GetTimesheetStatus", 
+            { params: {datefrom: datefrom?.toDateString() ?? '', dateTo: dateTo?.toDateString() ?? ''} }
+        );
     }
 
     getTimesheetStatusByMonth() : Observable<TimesheetByMonth[]> {

@@ -9,12 +9,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { SearchInputComponent } from '../../shared/search-input/search-input.component';
-import { AvatarRendererComponent } from '../../shared/avatar/avatar.renderer.component';
-import { DashboardService, EmployeeSummary } from '../../../services/dashboard.service';
-import { DataLoader } from '../../../utility/dataLoader';
-import { SpinnerComponent } from '../../shared/spinner/spinner.component';
-import { RefreshEventService } from '../../../services/refreshEvent.service';
+import { SearchInputComponent } from '../../../shared/search-input/search-input.component';
+import { AvatarRendererComponent } from '../../../shared/avatar/avatar.renderer.component';
+import { DashboardService, EmployeeSummary } from '../../../../services/dashboard.service';
+import { DataLoader } from '../../../../utility/dataLoader';
+import { SpinnerComponent } from '../../../shared/spinner/spinner.component';
+import { RefreshEventService } from '../../../../services/refreshEvent.service';
 import { Subscription } from 'rxjs';
 
 
@@ -42,13 +42,15 @@ export class EmployeeSummaryComponent implements OnDestroy {
   defaultColDef: ColDef = {
       flex: 1,
   };
+
+  searchValue = "";
   constructor(private dashboardService: DashboardService, private refreshEventService: RefreshEventService){
     this.dataLoader = new DataLoader<EmployeeSummary[]>();
     this.refreshEventSubscription = refreshEventService.refreshObservable.subscribe(()=> {
       this.loadData();
     });
     this.rowData = computed(() => {
-      return this.dataLoader.data() ?? [];
+      return this.dataLoader.data()?.filter(d => this.searchValue == undefined || this.searchValue == null || this.searchValue.trim() == "" || d.name.toLowerCase().includes(this.searchValue.toLowerCase())) ?? [];
     });
 
     this.loadData();
@@ -58,6 +60,11 @@ export class EmployeeSummaryComponent implements OnDestroy {
     this.dataLoader.load(this.dashboardService.getEmployeeSummary());
   }
 
+  onSearchChanged(value: string) {
+    console.log("Search data changed: " + value);
+    this.searchValue = value;
+    this.dataLoader.data.set([...(this.dataLoader.data() ?? [])]);
+  }
 
   ngOnDestroy(): void {
     this.refreshEventSubscription.unsubscribe();
