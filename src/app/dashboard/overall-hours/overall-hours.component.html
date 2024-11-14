@@ -3,19 +3,21 @@
         <mat-card appearance="outlined" class="child-card">
             <mat-card-content>
                 <div fxLayout="column" fxFlexFill  class="chart-wrapper">
-                    <ag-charts [options]="chartOptions"
+                    <app-spinner *ngIf="dataLoader.isLoading" style="height: 100%; width: 100%;"></app-spinner>
+                    <ag-charts *ngIf="!dataLoader.isLoading" [options]="chartOptions()"
                         style="width: 100%; height: 100%;"
                         class="chart-container">
                     </ag-charts>
                 </div>
             </mat-card-content>
-        </mat-card>
+        </mat-card> 
     </mat-grid-tile>
     <mat-grid-tile colspan="3">
         <mat-card appearance="outlined" class="child-card">
             <mat-card-content>
                 <div fxLayout="column" fxFlexFill class="chart-wrapper">
-                    <ag-charts [options]="barChartOptions"
+                    <app-spinner *ngIf="dataLoader.isLoading" style="height: 100%; width: 100%;"></app-spinner>
+                    <ag-charts  *ngIf="!dataLoader.isLoading" [options]="barChartOptions()"
                         style="width: 100%; height: 100%;"
                         class="chart-container">
                     </ag-charts>

@@ -1,5 +1,13 @@
-<mat-grid-list cols="4" gutterSize="15" rowHeight="94">
-    <mat-grid-tile colspan="1" *ngFor="let report of timesheetSummaryReports">
-        <timesheet-card [data]="report"></timesheet-card>
-    </mat-grid-tile>
-</mat-grid-list>
+<div>
+    <mat-grid-list cols="4" gutterSize="15" rowHeight="94" *ngIf="!dataLoader.isLoading">
+        <mat-grid-tile colspan="1" *ngFor="let report of timesheetSummaryReports()">
+            <timesheet-card [data]="report"></timesheet-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="1" gutterSize="15" rowHeight="94" *ngIf="dataLoader.isLoading">
+        <mat-grid-tile colspan="1">
+            <app-spinner style="height: 100%; width: 100%;"></app-spinner>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
