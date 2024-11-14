@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchInputComponent } from '../../shared/search-input/search-input.component';
+import { AvatarRendererComponent } from '../../shared/avatar/avatar.renderer.component';
 
 interface IRow {
   name: string;
@@ -16,6 +17,7 @@ interface IRow {
   unconfirmedTimesheet: number;
   confirmedTimesheet: number;
   missingTimesheet: number;
+  image: string;
 }
 
 @Component({
@@ -28,15 +30,20 @@ interface IRow {
 export class EmployeeSummaryComponent {
 
   rowData: IRow[] = [
-    { name: 'Theresa Webb', timesheetExpected: 54, unconfirmedTimesheet: 21, confirmedTimesheet: 22, missingTimesheet: 11 },
-    { name: 'Darrell Steward', timesheetExpected: 57, unconfirmedTimesheet: 12, confirmedTimesheet: 33, missingTimesheet: 12},
-    { name: 'Marvin McKinney', timesheetExpected: 99, unconfirmedTimesheet: 34, confirmedTimesheet: 44, missingTimesheet:21 },
-    { name: 'Brooklyn Simmons', timesheetExpected: 130, unconfirmedTimesheet: 44, confirmedTimesheet: 55, missingTimesheet: 31 },
-    { name: 'Wade Warren', timesheetExpected: 128, unconfirmedTimesheet: 21, confirmedTimesheet: 66, missingTimesheet: 41 }
+    { name: 'Theresa Webb', timesheetExpected: 54, unconfirmedTimesheet: 21, confirmedTimesheet: 22, missingTimesheet: 11, image: 'theresaWebb.png' },
+    { name: 'Darrell Steward', timesheetExpected: 57, unconfirmedTimesheet: 12, confirmedTimesheet: 33, missingTimesheet: 12, image: 'DarrellSteward.png' },
+    { name: 'Marvin McKinney', timesheetExpected: 99, unconfirmedTimesheet: 34, confirmedTimesheet: 44, missingTimesheet:21, image: 'marvinMcKinney.png' },
+    { name: 'Brooklyn Simmons', timesheetExpected: 130, unconfirmedTimesheet: 44, confirmedTimesheet: 55, missingTimesheet: 31, image: 'brooklynSimmons.png' },
+    { name: 'Wade Warren', timesheetExpected: 128, unconfirmedTimesheet: 21, confirmedTimesheet: 66, missingTimesheet: 41, image: 'marvinMcKinney.png' }
   ];
 
   // Column Definitions: Defines & controls grid columns.
-  colDefs: ColDef<IRow>[] = [{ field: 'name' }, { field: 'timesheetExpected' }, { field: 'unconfirmedTimesheet' }, { field: 'confirmedTimesheet' }, { field: 'missingTimesheet' }];
+  colDefs: ColDef<IRow>[] = [
+    { field: 'name', cellRenderer: AvatarRendererComponent}, 
+    { field: 'timesheetExpected' }, 
+    { field: 'unconfirmedTimesheet' }, 
+    { field: 'confirmedTimesheet' }, 
+    { field: 'missingTimesheet' }];
 
   defaultColDef: ColDef = {
       flex: 1,

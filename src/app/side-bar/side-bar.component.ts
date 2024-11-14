@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatIconModule} from '@angular/material/icon';
+import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
@@ -16,6 +16,7 @@ import { SredDateRangePicker } from '../shared/date-range-picker/date-range-pick
 import { UserProfileComponent } from "../user-profile/user-profile.component";
 import { AppToolbarIconComponent } from '../shared/app-toolbar-icon/app-toolbar-icon.component';
 import { SearchInputComponent } from '../shared/search-input/search-input.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-side-bar',
@@ -26,5 +27,11 @@ import { SearchInputComponent } from '../shared/search-input/search-input.compon
   styleUrl: './side-bar.component.css'
 })
 export class SideBarComponent {
+  
+  constructor() {
+    const iconRegistry = inject(MatIconRegistry);
+    const sanitizer = inject(DomSanitizer);
+    iconRegistry.addSvgIcon('panel-close', sanitizer.bypassSecurityTrustResourceUrl('/panel-close.svg'));
+  }
 
 }

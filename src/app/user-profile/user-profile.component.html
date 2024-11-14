@@ -1,25 +1,16 @@
-<!-- 
-    <button mat-button [matMenuTriggerFor]="menu">
-      <img [src]="userAvatarUrl" alt="Avatar" class="avatar">
-      userName
-      <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
-    </button> -->
-
-    <button class="user-profile" [matMenuTriggerFor]="menu" (click)="openMenu($event)" #userProfile>
-        <img class="avatar" [src]="userAvatarUrl" alt="User Avatar" />
-        <div class="user-info">
-            <span class="user-name">{{ userName }}</span>
-            
-            <!-- Display User Type Below Username -->
-            <span class="user-type">{{ userType }}</span>
-        </div>
-        <span class="spacer"></span>
-        <mat-icon class="text-right">keyboard_arrow_down</mat-icon>
-    </button>
+<button class="user-profile" [matMenuTriggerFor]="menu" (click)="openMenu($event)" #userProfile>
+    <img class="avatar" [src]="userAvatarUrl" alt="User Avatar" />
+    <div class="user-info">
+        <span class="user-name">{{ userName }}</span>
+        <span class="user-type">{{ userType }}</span>
+    </div>
+    <span class="spacer"></span>
+    <mat-icon class="text-right">keyboard_arrow_down</mat-icon>
+</button>
   
-  <mat-menu #menu="matMenu" [style.width]="menuWidth" class="custom-menu">
-    <button mat-menu-item>Profile</button>
-    <button mat-menu-item>Settings</button>
-    <button mat-menu-item>Logout</button>
-  </mat-menu>
+<mat-menu #menu="matMenu" [style.width]="menuWidth" class="custom-menu">
+  <button mat-menu-item>Profile</button>
+  <button mat-menu-item>Settings</button>
+  <button mat-menu-item>Logout</button>
+</mat-menu>
   

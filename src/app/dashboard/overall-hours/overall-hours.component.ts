@@ -21,15 +21,11 @@ export class OverallHoursComponent {
         { name: "Total Worked Hours", value: 600 },
         { name: "Total Tracked Hours", value: 400 }
       ],
-      // title: {
-      //   text: "Total Hours",
-      // },
       series: [
         {
           type: "donut",
           angleKey: "value",
           legendItemKey: "name",
-
           
           innerRadiusRatio: 0.5,
           innerLabels: [
@@ -61,6 +57,7 @@ export class OverallHoursComponent {
             xKey: "month",
             yKey: "cumulativehours",
             yName: "Cumulative Hours",
+            cornerRadius: 4,
             fill: "#03BCF3"
           },
           {
@@ -68,12 +65,33 @@ export class OverallHoursComponent {
             xKey: "month",
             yKey: "tootalHours",
             yName: "Tootal Hours",
+            cornerRadius: 4,
             fill: "#091836"
           }
         ],
         background: {
           fill: "#FBFBFB",
         },
+        axes:[
+          {
+            position: "bottom",
+            type: "category"
+          },
+          {
+            position: "left",
+            type: "number",
+            keys: ["cumulativehours", "tootalHours"],
+            label: {
+              formatter: (params) => {
+                return params.value + ' hrs';
+              }
+            }
+          }
+        ],
+        tooltip: {
+
+        }
+
     };
 
   }

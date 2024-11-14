@@ -1,7 +1,16 @@
 @import 'ag-grid-community/styles/ag-grid.css';
 
 @import 'ag-grid-community/styles/ag-theme-quartz.css';
+
+:root {
+    --mdc-outlined-button-container-shape : 8px;
+    --mdc-text-button-container-shape : 8px;
+    --mdc-outlined-button-outline-color: #D1D1D1;
+}
+
 html, body { height: 100%; }
+
+
 body { 
     margin: 0; font-family: Roboto, "Manrope", sans-serif; background: #F7F9FB;
     
@@ -81,10 +90,20 @@ body {
     border-color: #E3E3E3 !important;
 }
 
-
 .filter-section {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-bottom: 16px;
+}
+
+.btn-default {
+    color: #000000 !important;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #091836 !important;
+    color: #ffffff !important;
 }

@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchInputComponent } from '../../shared/search-input/search-input.component';
+import { AvatarRendererComponent } from '../../shared/avatar/avatar.renderer.component';
 
 interface IRow {
   name: string;
@@ -20,6 +21,7 @@ interface IRow {
   fiber: number;
   fdTest: number;
   sredHour: number;
+  image: string;
 }
 
 @Component({
@@ -32,15 +34,20 @@ interface IRow {
 export class SredSummaryComponent {
 
   rowData: IRow[] = [
-    { name: 'Theresa Webb', trackingScore: 70, expectedHours: 120, workedHours: 20, trackedHours: 40, new: 10, fiber: 0, fdTest:40, sredHour: 40 },
-    { name: 'Darrell Steward', trackingScore: 87, expectedHours: 100, workedHours: 10, trackedHours: 55, new: 22, fiber: 0, fdTest:55, sredHour: 55},
-    { name: 'Marvin McKinney', trackingScore: 125, expectedHours: 160, workedHours: 60, trackedHours: 10, new: 55, fiber: 0, fdTest:10, sredHour: 10 },
-    { name: 'Brooklyn Simmons', trackingScore: 152, expectedHours: 220, workedHours: 22, trackedHours: 70, new: 60, fiber: 0, fdTest:70, sredHour: 70 },
-    { name: 'Wade Warren', trackingScore: 95, expectedHours: 120, workedHours: 12, trackedHours: 50, new: 33, fiber: 0, fdTest:50, sredHour: 50 }
+    { name: 'Theresa Webb', trackingScore: 70, expectedHours: 120, workedHours: 20, trackedHours: 40, new: 10, fiber: 0, fdTest:40, sredHour: 40, image: 'theresaWebb.png' },
+    { name: 'Darrell Steward', trackingScore: 87, expectedHours: 100, workedHours: 10, trackedHours: 55, new: 22, fiber: 0, fdTest:55, sredHour: 55, image: 'DarrellSteward.png'},
+    { name: 'Marvin McKinney', trackingScore: 125, expectedHours: 160, workedHours: 60, trackedHours: 10, new: 55, fiber: 0, fdTest:10, sredHour: 10, image: 'marvinMcKinney.png' },
+    { name: 'Brooklyn Simmons', trackingScore: 152, expectedHours: 220, workedHours: 22, trackedHours: 70, new: 60, fiber: 0, fdTest:70, sredHour: 70, image: 'brooklynSimmons.png' },
+    { name: 'Wade Warren', trackingScore: 95, expectedHours: 120, workedHours: 12, trackedHours: 50, new: 33, fiber: 0, fdTest:50, sredHour: 50, image: 'marvinMcKinney.png' }
   ];
 
   // Column Definitions: Defines & controls grid columns.
-  colDefs: ColDef<IRow>[] = [{ field: 'name' }, { field: 'trackingScore' }, { field: 'expectedHours' }, { field: 'workedHours' }, { field: 'trackedHours' },
+  colDefs: ColDef<IRow>[] = [
+    { field: 'name', cellRenderer: AvatarRendererComponent}, 
+    { field: 'trackingScore' }, 
+    { field: 'expectedHours' }, 
+    { field: 'workedHours' }, 
+    { field: 'trackedHours' },
     { field: 'new' }, { field: 'fiber' }, { field: 'fdTest' }, { field: 'sredHour' }
   ];
 

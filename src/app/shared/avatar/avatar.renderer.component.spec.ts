@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TimesheetCardComponent } from './timesheet-card.component';
+import { AvatarComponent } from './avatar.renderer.component';
 
-describe('TimesheetCardComponent', () => {
-  let component: TimesheetCardComponent;
-  let fixture: ComponentFixture<TimesheetCardComponent>;
+describe('AvatarComponent', () => {
+  let component: AvatarComponent;
+  let fixture: ComponentFixture<AvatarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TimesheetCardComponent]
+      imports: [AvatarComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TimesheetCardComponent);
+    fixture = TestBed.createComponent(AvatarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
