@@ -1,4 +1,4 @@
-import { Component, computed, signal, Signal } from '@angular/core';
+import { Component, computed, OnDestroy, signal, Signal } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import { AgCharts } from 'ag-charts-angular';
 import { AgChartOptions } from 'ag-charts-community';
@@ -7,6 +7,8 @@ import { DashboardService, SimpleObject, TimesheetByMonth } from '../../../servi
 import { DataLoader } from '../../../utility/dataLoader';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from '../../shared/spinner/spinner.component';
+import { RefreshEventService } from '../../../services/refreshEvent.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'dashboard-overall-hours',
@@ -15,20 +17,25 @@ import { SpinnerComponent } from '../../shared/spinner/spinner.component';
   templateUrl: './overall-hours.component.html',
   styleUrl: './overall-hours.component.css'
 })
-export class OverallHoursComponent {
+export class OverallHoursComponent implements OnDestroy {
 
   public chartOptions: Signal<AgChartOptions>;
   public barChartOptions: Signal<AgChartOptions>;
 
   dataLoader: DataLoader<SimpleObject[]>;
   barChartDataLoader: DataLoader<TimesheetByMonth[]>;
+  refreshEventSubscription: Subscription;
 
-  constructor(private dashboardService : DashboardService) {
+  constructor(private dashboardService : DashboardService, refreshEventService: RefreshEventService) {
+
     this.dataLoader = new DataLoader<SimpleObject[]>();
     this.barChartDataLoader = new DataLoader<TimesheetByMonth[]>();
 
-    this.dataLoader.load(dashboardService.getTimesheetStatus());
-    this.barChartDataLoader.load(dashboardService.getTimesheetStatusByMonth());
+    this.refreshEventSubscription = refreshEventService.refreshObservable.subscribe(()=> {
+      this.loadData();
+    });
+
+    this.loadData();
 
     this.chartOptions = computed(() : AgChartOptions => {
       const total = this.dataLoader.data()?.reduce((sum, curr) => sum + Number(curr.value), 0).toString() ?? "0";
@@ -108,5 +115,14 @@ export class OverallHoursComponent {
         ]
       };
     });
+  }
+
+  loadData() {
+    this.dataLoader.load(this.dashboardService.getTimesheetStatus());
+    this.barChartDataLoader.load(this.dashboardService.getTimesheetStatusByMonth());
+  }
+
+  ngOnDestroy(): void {
+    this.refreshEventSubscription.unsubscribe();
   }
 }

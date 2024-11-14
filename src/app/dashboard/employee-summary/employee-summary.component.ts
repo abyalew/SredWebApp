@@ -1,4 +1,4 @@
-import { Component, computed, Signal } from '@angular/core';
+import { Component, computed, Signal, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import { AgGridAngular } from 'ag-grid-angular';
@@ -14,6 +14,8 @@ import { AvatarRendererComponent } from '../../shared/avatar/avatar.renderer.com
 import { DashboardService, EmployeeSummary } from '../../../services/dashboard.service';
 import { DataLoader } from '../../../utility/dataLoader';
 import { SpinnerComponent } from '../../shared/spinner/spinner.component';
+import { RefreshEventService } from '../../../services/refreshEvent.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -25,16 +27,10 @@ import { SpinnerComponent } from '../../shared/spinner/spinner.component';
   templateUrl: './employee-summary.component.html',
   styleUrl: './employee-summary.component.css'
 })
-export class EmployeeSummaryComponent {
+export class EmployeeSummaryComponent implements OnDestroy {
   rowData: Signal<EmployeeSummary[]>;
   dataLoader: DataLoader<EmployeeSummary[]>;
-  constructor(dashboardService: DashboardService){
-    this.dataLoader = new DataLoader<EmployeeSummary[]>();
-    this.rowData = computed(() => {
-      return this.dataLoader.data() ?? [];
-    });
-    this.dataLoader.load(dashboardService.getEmployeeSummary());
-  }
+  refreshEventSubscription: Subscription;
   colDefs: ColDef<EmployeeSummary>[] = [
     { field: 'name', cellRenderer: AvatarRendererComponent}, 
     { field: 'timesheetExpected' }, 
@@ -46,5 +42,24 @@ export class EmployeeSummaryComponent {
   defaultColDef: ColDef = {
       flex: 1,
   };
+  constructor(private dashboardService: DashboardService, private refreshEventService: RefreshEventService){
+    this.dataLoader = new DataLoader<EmployeeSummary[]>();
+    this.refreshEventSubscription = refreshEventService.refreshObservable.subscribe(()=> {
+      this.loadData();
+    });
+    this.rowData = computed(() => {
+      return this.dataLoader.data() ?? [];
+    });
 
+    this.loadData();
+  }
+  
+  loadData(){
+    this.dataLoader.load(this.dashboardService.getEmployeeSummary());
+  }
+
+
+  ngOnDestroy(): void {
+    this.refreshEventSubscription.unsubscribe();
+  }
 }

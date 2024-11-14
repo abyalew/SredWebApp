@@ -14,6 +14,7 @@ export class DataLoader<T> {
         this.isLoading = true;
         this.hasError = false;
         this.action$ = action$;
+        this.data.set(undefined);
         this.action$.pipe(
             take(1),
             catchError(() => {

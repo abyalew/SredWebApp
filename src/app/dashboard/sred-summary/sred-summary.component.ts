@@ -1,4 +1,4 @@
-import { Component, computed, Signal } from '@angular/core';
+import { Component, computed, OnDestroy, Signal } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
@@ -14,6 +14,8 @@ import { DashboardService, SredSummary } from '../../../services/dashboard.servi
 import { DataLoader } from '../../../utility/dataLoader';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from '../../shared/spinner/spinner.component';
+import { Subscription } from 'rxjs';
+import { RefreshEventService } from '../../../services/refreshEvent.service';
 
 
 
@@ -25,18 +27,10 @@ import { SpinnerComponent } from '../../shared/spinner/spinner.component';
   templateUrl: './sred-summary.component.html',
   styleUrl: './sred-summary.component.css'
 })
-export class SredSummaryComponent {
+export class SredSummaryComponent implements OnDestroy {
   dataLoader: DataLoader<SredSummary[]>;
   rowData: Signal<SredSummary[]>;
-  constructor(dashboardService: DashboardService){
-    this.dataLoader = new DataLoader<SredSummary[]>();
-
-    this.rowData = computed(() => {
-      return this.dataLoader.data() ?? [];
-    });
-
-    this.dataLoader.load(dashboardService.getSredSummary());
-  }
+  refreshEventSubscription: Subscription;
 
   colDefs: ColDef<SredSummary>[] = [
     { field: 'name', cellRenderer: AvatarRendererComponent}, 
@@ -50,4 +44,23 @@ export class SredSummaryComponent {
   defaultColDef: ColDef = {
       flex: 1,
   };
+
+  constructor(private dashboardService: DashboardService, refreshEventService: RefreshEventService){
+    this.dataLoader = new DataLoader<SredSummary[]>();
+    this.refreshEventSubscription = refreshEventService.refreshObservable.subscribe(()=>{
+      this.loadData();
+    })
+    this.rowData = computed(() => {
+      return this.dataLoader.data() ?? [];
+    });
+    this.loadData();
+  }
+
+  loadData(){
+    this.dataLoader.load(this.dashboardService.getSredSummary());
+  }
+
+  ngOnDestroy(): void {
+    this.refreshEventSubscription.unsubscribe();
+  }
 }
