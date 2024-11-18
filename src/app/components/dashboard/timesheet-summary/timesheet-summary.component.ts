@@ -5,10 +5,10 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import { TimesheetCardComponent, TimesheetData } from './timesheet-card/timesheet-card.component';
 import { CommonModule } from '@angular/common';
-import { DashboardService, TimesheetSummary } from '../../../../services/dashboard.service';
+import { DashboardService, TimesheetSummary } from '../../../services/dashboard.service';
 import { DataLoader } from '../../../../utility/dataLoader';
 import { SpinnerComponent } from '../../../shared/spinner/spinner.component';
-import { RefreshEventService } from '../../../../services/refreshEvent.service';
+import { RefreshEventService } from '../../../services/refreshEvent.service';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'dashboard-timesheet-summary',

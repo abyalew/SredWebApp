@@ -11,10 +11,10 @@ import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchInputComponent } from '../../../shared/search-input/search-input.component';
 import { AvatarRendererComponent } from '../../../shared/avatar/avatar.renderer.component';
-import { DashboardService, EmployeeSummary } from '../../../../services/dashboard.service';
+import { DashboardService, EmployeeSummary } from '../../../services/dashboard.service';
 import { DataLoader } from '../../../../utility/dataLoader';
 import { SpinnerComponent } from '../../../shared/spinner/spinner.component';
-import { RefreshEventService } from '../../../../services/refreshEvent.service';
+import { RefreshEventService } from '../../../services/refreshEvent.service';
 import { Subscription } from 'rxjs';
 
 

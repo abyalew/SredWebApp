@@ -3,11 +3,11 @@ import {MatCardModule} from '@angular/material/card';
 import { AgCharts } from 'ag-charts-angular';
 import { AgChartOptions } from 'ag-charts-community';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { DashboardService, ProjectHour } from '../../../../services/dashboard.service';
+import { DashboardService, ProjectHour } from '../../../services/dashboard.service';
 import { DataLoader } from '../../../../utility/dataLoader';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from '../../../shared/spinner/spinner.component';
-import { RefreshEventService } from '../../../../services/refreshEvent.service';
+import { RefreshEventService } from '../../../services/refreshEvent.service';
 import { Subscription } from 'rxjs';
 
 export interface ChartData {

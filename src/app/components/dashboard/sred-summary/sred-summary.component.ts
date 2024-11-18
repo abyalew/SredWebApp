@@ -10,12 +10,12 @@ import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchInputComponent } from '../../../shared/search-input/search-input.component';
 import { AvatarRendererComponent } from '../../../shared/avatar/avatar.renderer.component';
-import { DashboardService, SredSummary } from '../../../../services/dashboard.service';
+import { DashboardService, SredSummary } from '../../../services/dashboard.service';
 import { DataLoader } from '../../../../utility/dataLoader';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from '../../../shared/spinner/spinner.component';
 import { Subscription } from 'rxjs';
-import { RefreshEventService } from '../../../../services/refreshEvent.service';
+import { RefreshEventService } from '../../../services/refreshEvent.service';
 
 
 
