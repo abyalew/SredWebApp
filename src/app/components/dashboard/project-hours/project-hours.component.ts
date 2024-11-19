@@ -21,7 +21,7 @@ export interface ChartData {
   standalone: true,
   imports: [MatCardModule, AgCharts, MatGridListModule, CommonModule, SpinnerComponent],
   templateUrl: './project-hours.component.html',
-  styleUrl: './project-hours.component.css'
+  styleUrl: './project-hours.component.scss'
 })
 export class ProjectHoursComponent implements OnDestroy {
   dataLoader: DataLoader<ProjectHour[]>;

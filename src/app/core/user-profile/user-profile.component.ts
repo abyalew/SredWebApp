@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
   ],
   templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.css'
+  styleUrl: './user-profile.component.scss'
 })
 export class UserProfileComponent implements AfterViewInit {
   @ViewChild('userProfile', { static: false }) userProfile!: ElementRef;

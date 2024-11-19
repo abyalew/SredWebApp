@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatIconModule, CommonModule, FormsModule],
   templateUrl: './search-input.component.html',
-  styleUrl: './search-input.component.css'
+  styleUrl: './search-input.component.scss'
 })
 export class SearchInputComponent {
   @Output() changed = new EventEmitter<string>();

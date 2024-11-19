@@ -19,7 +19,7 @@ import { ICellRendererParams } from '@ag-grid-community/core';
           }
       </span>
   `,
-  styleUrl: './avatar.renderer.component.css'
+  styleUrl: './avatar.renderer.component.scss'
 })
 export class AvatarRendererComponent implements ICellRendererAngularComp{
   public value!: string;

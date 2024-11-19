@@ -11,7 +11,7 @@ import { RefreshEventService } from '../../services/refreshEvent.service';
 @Component({
   selector: 'sred-date-range-picker',
   templateUrl: './date-range-picker.component.html',
-  styleUrl: './date-range-picker.component.css',
+  styleUrl: './date-range-picker.component.scss',
   standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [MatFormFieldModule, MatDatepickerModule, FormsModule, MatInputModule, ReactiveFormsModule, JsonPipe],

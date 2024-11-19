@@ -8,7 +8,7 @@ import { RefreshEventService } from '../../../services/refreshEvent.service';
   standalone: true,
   imports: [MatButtonModule, MatIconModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   constructor(public refreshEventService: RefreshEventService){

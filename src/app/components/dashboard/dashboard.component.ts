@@ -13,7 +13,7 @@ import { SectionContainerComponent } from './section-container/section-container
     SectionContainerComponent
   ],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
 

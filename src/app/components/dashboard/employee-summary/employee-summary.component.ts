@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
     MatInputModule, MatIconModule, MatButtonModule, SearchInputComponent, 
      CommonModule, SpinnerComponent],
   templateUrl: './employee-summary.component.html',
-  styleUrl: './employee-summary.component.css'
+  styleUrl: './employee-summary.component.scss'
 })
 export class EmployeeSummaryComponent implements OnDestroy {
   rowData: Signal<EmployeeSummary[]>;

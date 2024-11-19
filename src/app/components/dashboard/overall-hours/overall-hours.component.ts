@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   standalone: true,
   imports: [MatCardModule, AgCharts, MatGridListModule, CommonModule, SpinnerComponent],
   templateUrl: './overall-hours.component.html',
-  styleUrl: './overall-hours.component.css'
+  styleUrl: './overall-hours.component.scss'
 })
 export class OverallHoursComponent implements OnDestroy {
 

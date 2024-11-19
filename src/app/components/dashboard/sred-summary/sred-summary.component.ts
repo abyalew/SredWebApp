@@ -25,7 +25,7 @@ import { RefreshEventService } from '../../../services/refreshEvent.service';
   imports: [MatCardModule, AgGridAngular, MatGridListModule, MatFormFieldModule, 
     MatInputModule, MatIconModule, MatButtonModule, SearchInputComponent, CommonModule, SpinnerComponent],
   templateUrl: './sred-summary.component.html',
-  styleUrl: './sred-summary.component.css'
+  styleUrl: './sred-summary.component.scss'
 })
 export class SredSummaryComponent implements OnDestroy {
   dataLoader: DataLoader<SredSummary[]>;

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -17,6 +17,7 @@ import { UserProfileComponent } from "../user-profile/user-profile.component";
 import { AppToolbarIconComponent } from '../../shared/app-toolbar-icon/app-toolbar-icon.component';
 import { SearchInputComponent } from '../../shared/search-input/search-input.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ResponsiveService } from '../../services/responsive.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -24,9 +25,16 @@ import { DomSanitizer } from '@angular/platform-browser';
   imports: [RouterOutlet, MatSidenavModule, MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule, MatFormFieldModule, SredDateRangePicker, MatBadgeModule,
     MatDividerModule, MatListModule, MatSlideToggleModule, UserProfileComponent, AppToolbarIconComponent, SearchInputComponent, MatCardModule],
   templateUrl: './side-bar.component.html',
-  styleUrl: './side-bar.component.css'
+  styleUrl: './side-bar.component.scss'
 })
 export class SideBarComponent {
+
+  responsiveService: ResponsiveService = inject(ResponsiveService);
+  sideNavMode = computed(()=>{
+    if(this.responsiveService.mediumWidth())
+      return 'over';
+    return 'side';
+  });
   
   constructor() {
     const iconRegistry = inject(MatIconRegistry);
@@ -40,6 +48,7 @@ export class SideBarComponent {
     iconRegistry.addSvgIcon('user_group_outlined', sanitizer.bypassSecurityTrustResourceUrl('/user_group_outlined.svg'));
     iconRegistry.addSvgIcon('dark_mode_outlined', sanitizer.bypassSecurityTrustResourceUrl('/dark_mode_outlined.svg'));
     iconRegistry.addSvgIcon('paper', sanitizer.bypassSecurityTrustResourceUrl('/paper.svg'));
+
   }
 
 }

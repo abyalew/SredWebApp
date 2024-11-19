@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
   imports: [CommonModule, MatGridListModule, MatCardModule, MatChipsModule, MatIconModule, 
     TimesheetCardComponent, SpinnerComponent],
   templateUrl: './timesheet-summary.component.html',
-  styleUrl: './timesheet-summary.component.css'
+  styleUrl: './timesheet-summary.component.scss'
 })
 export class TimesheetSummaryComponent implements OnDestroy {
   timesheetSummaryReports : Signal<TimesheetData[]>;

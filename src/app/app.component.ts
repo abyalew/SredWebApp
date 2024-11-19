@@ -6,7 +6,7 @@ import { SideBarComponent } from "./core/side-bar/side-bar.component";
   standalone: true,
   imports: [SideBarComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'SredWebApp';

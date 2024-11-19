@@ -16,7 +16,7 @@ export interface TimesheetData {
   standalone: true,
   imports: [CommonModule, MatCardModule, MatChipsModule, MatIconModule],
   templateUrl: './timesheet-card.component.html',
-  styleUrl: './timesheet-card.component.css'
+  styleUrl: './timesheet-card.component.scss'
 })
 export class TimesheetCardComponent {
   @Input() data : TimesheetData  = {

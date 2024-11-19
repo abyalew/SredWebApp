@@ -7,7 +7,7 @@ import { MatBadgeModule } from '@angular/material/badge';
   standalone: true,
   imports: [MatIconModule, MatBadgeModule],
   templateUrl: './app-toolbar-icon.component.html',
-  styleUrl: './app-toolbar-icon.component.css'
+  styleUrl: './app-toolbar-icon.component.scss'
 })
 export class AppToolbarIconComponent {
   @Input() icon = '';
