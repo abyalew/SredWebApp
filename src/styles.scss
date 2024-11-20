@@ -143,6 +143,16 @@ body {
     color: #ffffff !important;
 }
 
+.icon-only {
+    --mat-text-button-icon-spacing: 0px;
+    --mat-text-button-icon-offset: 0px;
+}
+
+.fill-available {
+    height: 100%; 
+    width: 100%;
+}
+
 
 
 ////////////////////////////////////////
@@ -162,7 +172,7 @@ body {
 }
 
 .sred-mat-sidenav-menu-list {
-    margin-bottom: 45px;
+    margin-bottom: 45px !important;
 }
 
 .sred-sidenav-menu-item {
@@ -183,6 +193,9 @@ body {
     --mdc-list-list-item-container-color: #F6FBFF;
 }
 
+.sred-sidenav-menu-item-toggle {
+    float: right;
+}
 .sred-help-mat-card {
     --mdc-outlined-card-container-color: #292929;
 }
@@ -199,4 +212,12 @@ body {
     padding: 15.5px 32px !important;
     --mat-toolbar-standard-height: 87px;
     --mat-toolbar-container-background-color: #FFFFFF;
+}
+
+.sred-mat-toolbar-search-input {
+    width: 300px; 
+    margin-left:32px;
+}
+.sred-mat-toolbar-notification-spacing{
+    margin-right: 17px;
 }

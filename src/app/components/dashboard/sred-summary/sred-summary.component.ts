@@ -8,7 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { SearchInputComponent } from '../../../shared/search-input/search-input.component';
 import { AvatarRendererComponent } from '../../../shared/avatar/avatar.renderer.component';
 import { DashboardService, SredSummary } from '../../../services/dashboard.service';
 import { DataLoader } from '../../../../utility/dataLoader';
@@ -16,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from '../../../shared/spinner/spinner.component';
 import { Subscription } from 'rxjs';
 import { RefreshEventService } from '../../../services/refreshEvent.service';
+import { FilterSectionComponent } from '../filter-section/filter-section.component';
 
 
 
@@ -23,7 +23,7 @@ import { RefreshEventService } from '../../../services/refreshEvent.service';
   selector: 'desktop-sred-summary',
   standalone: true,
   imports: [MatCardModule, AgGridAngular, MatGridListModule, MatFormFieldModule, 
-    MatInputModule, MatIconModule, MatButtonModule, SearchInputComponent, CommonModule, SpinnerComponent],
+    MatInputModule, MatIconModule, MatButtonModule, CommonModule, SpinnerComponent, FilterSectionComponent],
   templateUrl: './sred-summary.component.html',
   styleUrl: './sred-summary.component.scss'
 })

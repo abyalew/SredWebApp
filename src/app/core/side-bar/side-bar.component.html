@@ -39,7 +39,7 @@
               <mat-list-item class="sred-sidenav-menu-item text-sm">
                 <mat-icon matListItemIcon svgIcon="dark_mode_outlined"></mat-icon>
                 <span >Dark Mode</span>
-                <mat-slide-toggle hideIcon style="float: right;"></mat-slide-toggle>
+                <mat-slide-toggle hideIcon class="sred-sidenav-menu-item-toggle"></mat-slide-toggle>
               </mat-list-item>
           </mat-list>
 
@@ -55,11 +55,11 @@
             <button mat-icon-button aria-label="toggle side nav" (click)="sidenav.toggle()">
               <mat-icon svgIcon="panel-close"></mat-icon>
             </button>
-            <app-search-input style="width: 300px; margin-left:32px;"></app-search-input>
+            <app-search-input class="sred-mat-toolbar-search-input"></app-search-input>
             
             <span class="spacer"></span>
-            <app-toolbar-icon svgIcon="mail_outlined" [badge]="2" style="margin-right: 17px;"></app-toolbar-icon>
-            <app-toolbar-icon svgIcon="notifications_outlined" [badge]="8" style="margin-right: 17px;"></app-toolbar-icon>
+            <app-toolbar-icon svgIcon="mail_outlined" [badge]="2" class="sred-mat-toolbar-notification-spacing"></app-toolbar-icon>
+            <app-toolbar-icon svgIcon="notifications_outlined" [badge]="8" class="sred-mat-toolbar-notification-spacing"></app-toolbar-icon>
             <mat-divider [vertical]="true"></mat-divider>
             <sred-date-range-picker></sred-date-range-picker>
 
