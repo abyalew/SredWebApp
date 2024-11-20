@@ -1,4 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { computed, inject, Injectable } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -6,9 +6,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
   providedIn: 'root'
 })
 export class ResponsiveService {
- breakPointObserver: BreakpointObserver = inject(BreakpointObserver);
- medium = '(max-width: 1280px)';
-  screenWidth = toSignal(this.breakPointObserver.observe([ this.medium ]));
+  breakPointObserver: BreakpointObserver = inject(BreakpointObserver);
+  screenWidth = toSignal(this.breakPointObserver.observe([ Breakpoints.XSmall, Breakpoints.Small ,Breakpoints.Medium ]));
 
-  mediumWidth = computed(() => this.screenWidth()?.breakpoints[this.medium]);
+  extraSmallWidth = computed(() => this.screenWidth()?.breakpoints[Breakpoints.XSmall]);
+  smallWidth = computed(() => this.screenWidth()?.breakpoints[Breakpoints.Small]);
+  mediumWidth = computed(() => this.screenWidth()?.breakpoints[Breakpoints.Medium]);
 }

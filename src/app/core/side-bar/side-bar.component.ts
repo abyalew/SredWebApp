@@ -18,12 +18,13 @@ import { AppToolbarIconComponent } from '../../shared/app-toolbar-icon/app-toolb
 import { SearchInputComponent } from '../../shared/search-input/search-input.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResponsiveService } from '../../services/responsive.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-side-bar',
   standalone: true,
   imports: [RouterOutlet, MatSidenavModule, MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule, MatFormFieldModule, SredDateRangePicker, MatBadgeModule,
-    MatDividerModule, MatListModule, MatSlideToggleModule, UserProfileComponent, AppToolbarIconComponent, SearchInputComponent, MatCardModule],
+    MatDividerModule, MatListModule, MatSlideToggleModule, UserProfileComponent, AppToolbarIconComponent, SearchInputComponent, MatCardModule, CommonModule],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss'
 })
@@ -31,9 +32,15 @@ export class SideBarComponent {
 
   responsiveService: ResponsiveService = inject(ResponsiveService);
   sideNavMode = computed(()=>{
-    if(this.responsiveService.mediumWidth())
+    if(this.responsiveService.mediumWidth() || 
+    this.responsiveService.smallWidth() || 
+    this.responsiveService.extraSmallWidth())
       return 'over';
     return 'side';
+  });
+
+  isSmallViewPort = computed(()=> {
+    return this.responsiveService.smallWidth() || this.responsiveService.extraSmallWidth();
   });
   
   constructor() {
@@ -50,6 +57,7 @@ export class SideBarComponent {
     iconRegistry.addSvgIcon('paper', sanitizer.bypassSecurityTrustResourceUrl('/paper.svg'));
     iconRegistry.addSvgIcon('mail_outlined', sanitizer.bypassSecurityTrustResourceUrl('/mail_outlined.svg'));
     iconRegistry.addSvgIcon('notifications_outlined', sanitizer.bypassSecurityTrustResourceUrl('/notifications_outlined.svg'));
+    iconRegistry.addSvgIcon('search', sanitizer.bypassSecurityTrustResourceUrl('/search.svg'));
 
   }
 

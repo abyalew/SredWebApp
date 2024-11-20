@@ -55,13 +55,15 @@
             <button mat-icon-button aria-label="toggle side nav" (click)="sidenav.toggle()">
               <mat-icon svgIcon="panel-close"></mat-icon>
             </button>
-            <app-search-input class="sred-mat-toolbar-search-input"></app-search-input>
+            <app-search-input class="sred-mat-toolbar-search-input" *ngIf="!isSmallViewPort()"></app-search-input>
             
             <span class="spacer"></span>
+            <app-toolbar-icon svgIcon="search" class="sred-mat-toolbar-notification-spacing" *ngIf="isSmallViewPort()"></app-toolbar-icon>
             <app-toolbar-icon svgIcon="mail_outlined" [badge]="2" class="sred-mat-toolbar-notification-spacing"></app-toolbar-icon>
             <app-toolbar-icon svgIcon="notifications_outlined" [badge]="8" class="sred-mat-toolbar-notification-spacing"></app-toolbar-icon>
+            <app-toolbar-icon icon="calendar_today" class="sred-mat-toolbar-notification-spacing" *ngIf="isSmallViewPort()"></app-toolbar-icon>
             <mat-divider [vertical]="true"></mat-divider>
-            <sred-date-range-picker></sred-date-range-picker>
+            <sred-date-range-picker *ngIf="!isSmallViewPort()"></sred-date-range-picker>
 
 
           </mat-toolbar>

@@ -4,3 +4,23 @@
     --mat-form-field-container-height: 30px;
     --mat-form-field-container-vertical-padding: 9.5px;
   }
+
+  .search-button {
+    height: 36px;
+    width: 36px;
+    min-width: 36px !important;
+    padding: 6px !important;
+    background-color: #F6F6F6;
+    --mat-toolbar-container-text-color: #454545;
+    border:none;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+.search-button-Icon {
+  font-size: 1.525rem;
+  height: 1.525rem;
+  width: 1.525rem;
+  height: 18px;
+  height: 22px;
+}
