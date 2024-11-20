@@ -1,68 +1,65 @@
-<mat-sidenav-container>
-    <mat-sidenav [mode]="sideNavMode()" opened #sidenav>
+<mat-sidenav-container class="sred-mat-sidenav-container">
+    <mat-sidenav [mode]="sideNavMode()" opened #sidenav class="sred-mat-sidenav">
 
         <img src="Loogoo.png" alt="SredIo logo" class="sidebar-section"/>
 
         <app-user-profile class="sidebar-section"></app-user-profile>
-        <mat-list class="side-nav-menu-list">
+        <mat-list class="sred-mat-sidenav-menu-list">
             <div mat-subheader>GENERAL</div>
-              <mat-list-item class="sred-side-nav-item text-sm sred-side-nav-item-active">
+              <mat-list-item class="sred-sidenav-menu-item text-sm sred-sidenav-menu-item-active">
                 <mat-icon matListItemIcon svgIcon="home_outlined"></mat-icon>
                 <div matListItemTitle>Overview</div>
               </mat-list-item>
-              <mat-list-item class="sred-side-nav-item text-sm">
+              <mat-list-item class="sred-sidenav-menu-item text-sm">
                 <mat-icon matListItemIcon svgIcon="store_outlined"></mat-icon>
                 <div matListItemTitle>Navigation 02</div>
               </mat-list-item>
-              <mat-list-item class="sred-side-nav-item text-sm">
+              <mat-list-item class="sred-sidenav-menu-item text-sm">
                 <mat-icon matListItemIcon svgIcon="paper"></mat-icon>
                 <div matListItemTitle>Navigation 03</div>
               </mat-list-item>
-              <mat-list-item class="sred-side-nav-item text-sm">
+              <mat-list-item class="sred-sidenav-menu-item text-sm">
                 <mat-icon matListItemIcon svgIcon="user_group_outlined">group</mat-icon>
                 <div matListItemTitle>Navigation 04</div>
               </mat-list-item>
-              <mat-list-item class="sred-side-nav-item text-sm">
+              <mat-list-item class="sred-sidenav-menu-item text-sm">
                 <mat-icon matListItemIcon svgIcon="line_chart"></mat-icon>
                 <div matListItemTitle>Navigation 06</div>
               </mat-list-item>
               
             <div mat-subheader>TOOLS</div>
-              <mat-list-item class="sred-side-nav-item text-sm">
+              <mat-list-item class="sred-sidenav-menu-item text-sm">
                 <mat-icon matListItemIcon svgIcon="setting"></mat-icon>
                 <div matListItemTitle>Account & Settings</div>
               </mat-list-item>
-              <mat-list-item class="sred-side-nav-item text-sm">
+              <mat-list-item class="sred-sidenav-menu-item text-sm">
                 <mat-icon matListItemIcon svgIcon="help"></mat-icon>
                 <div matListItemTitle>Help</div>
               </mat-list-item>
-              <mat-list-item class="sred-side-nav-item text-sm">
+              <mat-list-item class="sred-sidenav-menu-item text-sm">
                 <mat-icon matListItemIcon svgIcon="dark_mode_outlined"></mat-icon>
                 <span >Dark Mode</span>
                 <mat-slide-toggle hideIcon style="float: right;"></mat-slide-toggle>
               </mat-list-item>
           </mat-list>
 
-          <mat-card appearance="outlined" class="help-card">
-            <mat-card-content class="help-card-content">
+          <mat-card appearance="outlined" class="sred-help-mat-card">
+            <mat-card-content class="sred-help-mat-card-content">
                 <div class="heading-6">Need Assistance?</div>
                 <p>For Report, Support or Suggestions, Please reach out to <a> {{"success@sred.io"}}</a></p>
             </mat-card-content>
           </mat-card>
     </mat-sidenav>
     <mat-sidenav-content>
-        <mat-toolbar>
+        <mat-toolbar class="sred-mat-toolbar">
             <button mat-icon-button aria-label="toggle side nav" (click)="sidenav.toggle()">
               <mat-icon svgIcon="panel-close"></mat-icon>
             </button>
+            <app-search-input style="width: 300px; margin-left:32px;"></app-search-input>
             
-            <div style="width: 300px;">
-                <app-search-input style="width: 300px; margin-left:32px;"></app-search-input>
-            </div>
-            
-            <span class="toolbar-spacer"></span>
-            <app-toolbar-icon icon="mail_outlined" [badge]="2" style="margin-right: 17px;"></app-toolbar-icon>
-            <app-toolbar-icon icon="notifications_outlined" [badge]="8" style="margin-right: 17px;"></app-toolbar-icon>
+            <span class="spacer"></span>
+            <app-toolbar-icon svgIcon="mail_outlined" [badge]="2" style="margin-right: 17px;"></app-toolbar-icon>
+            <app-toolbar-icon svgIcon="notifications_outlined" [badge]="8" style="margin-right: 17px;"></app-toolbar-icon>
             <mat-divider [vertical]="true"></mat-divider>
             <sred-date-range-picker></sred-date-range-picker>
 

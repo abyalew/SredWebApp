@@ -11,5 +11,6 @@ import { MatBadgeModule } from '@angular/material/badge';
 })
 export class AppToolbarIconComponent {
   @Input() icon = '';
+  @Input() svgIcon = '';
   @Input() badge = 0;
 }

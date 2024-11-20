@@ -1,6 +1,5 @@
-<mat-form-field appearance="outline"  class="search-form-field">
-    <mat-label>Search</mat-label>
-    <input matInput (keyup)="onChange()" [(ngModel)]="searchValue">
+<mat-form-field appearance="outline"  class="search-form-field" subscriptSizing="dynamic">
+    <input matInput (keyup)="onChange()" [(ngModel)]="searchValue" placeholder="Search">
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
   

@@ -1,3 +1,4 @@
+@import './styles/themes.scss';
 @import 'ag-grid-community/styles/ag-grid.css';
 
 @import 'ag-grid-community/styles/ag-theme-quartz.css';
@@ -6,14 +7,43 @@
     --mdc-outlined-button-container-shape : 8px;
     --mdc-text-button-container-shape : 8px;
     --mdc-outlined-button-outline-color: #D1D1D1;
-    --mat-datepicker-calendar-container-background-color: #fff;
+    --mat-datepicker-calendar-container-background-color: #FFFFFF;
+
+
+    ///input field styles
+    --mdc-outlined-text-field-focus-outline-color: #1A71F6;
+    --mdc-outlined-text-field-hover-outline-color: #1A71F6;
+    --mdc-outlined-text-field-outline-color: #D1D1D1;
+    --mat-form-field-container-vertical-padding: 16px;
+    --mat-form-field-filled-with-label-container-padding-top: 16px;
+    --mat-form-field-filled-with-label-container-padding-bottom: 16px;
+    --mdc-outlined-text-field-input-text-placeholder-color: #949494;
+    --mdc-outlined-text-field-input-text-color: #949494;
+    --mdc-outlined-text-field-label-text-color: #949494;
+    --mdc-outlined-text-field-label-text-size: 14px;
+    --mat-form-field-container-text-size: 14px;
+
+    /// slide toggle styles
+    --mdc-switch-unselected-handle-color: #FFFFFF;
+    --mat-switch-unselected-handle-size: 30px;
+    --mat-switch-selected-handle-size: 30px;
+    --mdc-switch-track-height: 34px;
+    --mdc-switch-track-width: 57px;
+    --mat-switch-track-outline-width: 0px;
+    --mat-switch-track-outline-width: 0px;
+    --mat-switch-unselected-handle-horizontal-margin: 0 3px;
+    --mdc-switch-unselected-hover-handle-color: #F7F9FB !important;
+    --mdc-switch-unselected-focus-handle-color: #F7F9FB !important;
+    --mdc-switch-unselected-track-color: #D0D5DD;
+    --mdc-switch-unselected-focus-track-color: #dee2f4;
 }
 
 html, body { height: 100%; }
 
 
 body { 
-    margin: 0; font-family: Roboto, "Manrope", sans-serif; background: #F7F9FB;
+    margin: 0; font-family: Roboto, "Manrope", sans-serif; 
+    // background: #F7F9FB;
     
 }
 
@@ -111,4 +141,62 @@ body {
 .btn-primary {
     background-color: #091836 !important;
     color: #ffffff !important;
+}
+
+
+
+////////////////////////////////////////
+/// 
+/// 
+////////////////////////////////////////
+
+
+.sred-mat-sidenav-container {
+    --mat-sidenav-container-width: 280px;
+    --mat-sidenav-container-background-color: #FFFFFF;
+    --mat-sidenav-content-background-color: #F7F9FB;
+}
+
+.sred-mat-sidenav {
+    padding: 32px 16px;
+}
+
+.sred-mat-sidenav-menu-list {
+    margin-bottom: 45px;
+}
+
+.sred-sidenav-menu-item {
+    --mdc-list-list-item-one-line-container-height: 40px;
+    --mdc-list-list-item-container-shape: 12px;
+    width: 248px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    cursor: pointer !important;
+}
+
+.sred-sidenav-menu-item-active {
+    --mdc-list-list-item-container-color: #D9EDFF;
+}
+
+.sred-sidenav-menu-item:hover {
+    --mdc-list-list-item-container-color: #F6FBFF;
+}
+
+.sred-help-mat-card {
+    --mdc-outlined-card-container-color: #292929;
+}
+
+.sred-help-mat-card-content {
+    color: #FFFFFF;
+}
+
+.sred-help-mat-card-content > p > a {
+    color: #03BCF3;
+}
+
+.sred-mat-toolbar {
+    padding: 15.5px 32px !important;
+    --mat-toolbar-standard-height: 87px;
+    --mat-toolbar-container-background-color: #FFFFFF;
 }

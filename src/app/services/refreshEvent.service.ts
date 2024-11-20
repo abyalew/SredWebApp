@@ -10,8 +10,6 @@ export interface FilterParam{
     providedIn: 'root'
 })
 export class RefreshEventService {
-
-
   public refresh = new BehaviorSubject<FilterParam | undefined>({ dateFrom: undefined, dateTo: undefined});
   refreshObservable = this.refresh.asObservable();
 

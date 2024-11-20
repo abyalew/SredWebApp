@@ -1,146 +1,185 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use 'sass:map';
 @use '@angular/material' as mat;
-@use "sass:map";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
 @include mat.core();
-@function create-theme($type: light, $density: 0) {
-    @return mat.define-theme((
-            color: (
-                    theme-type: $type,
-                    use-system-variables: true,
-                    system-variables-prefix: md-sys-color,
-            ),
-            typography: (
-                    use-system-variables: true,
-                    system-variables-prefix: md-sys-typescale,
-            ),
-            density: (
-                    scale: $density
-            ),
-    ));
-  }
-  
-  $light-theme: create-theme($type: light);
-  $dark-theme: create-theme($type: dark);
-  
-  :root {
-    @include mat.all-component-themes($dark-theme);
-//     @media (prefers-color-scheme: dark) {
-//         --mat-app-background-color: black;
-//       @include mat.all-component-colors($dark-theme);
-//       @include mat.all-component-typographies($dark-theme);
-//     }
+
+
+// Note: Color palettes are generated from primary: #1A71F6, secondary: #D0D5DD, tertiary: #D0D5DD
+$_palettes: (
+  primary: (
+    0: #000000,
+    10: #001944,
+    20: #002d6e,
+    25: #003784,
+    30: #00429b,
+    35: #004db2,
+    40: #0058ca,
+    50: #1870f5,
+    60: #558dff,
+    70: #85a9ff,
+    80: #b0c6ff,
+    90: #d9e2ff,
+    95: #edf0ff,
+    98: #faf8ff,
+    99: #fefbff,
+    100: #ffffff,
+  ),
+  secondary: (
+    0: #000000,
+    10: #171c22,
+    20: #2b3137,
+    25: #363c42,
+    30: #42474e,
+    35: #4d535a,
+    40: #595f66,
+    50: #72787f,
+    60: #8c9199,
+    70: #a6acb3,
+    80: #c2c7cf,
+    90: #dee3eb,
+    95: #ecf1f9,
+    98: #f7f9ff,
+    99: #fcfcff,
+    100: #ffffff,
+  ),
+  tertiary: (
+    0: #000000,
+    10: #171c22,
+    20: #2b3137,
+    25: #363c42,
+    30: #42474e,
+    35: #4d535a,
+    40: #595f66,
+    50: #72787f,
+    60: #8c9199,
+    70: #a6acb3,
+    80: #c2c7cf,
+    90: #dee3eb,
+    95: #ecf1f9,
+    98: #f7f9ff,
+    99: #fcfcff,
+    100: #ffffff,
+  ),
+  neutral: (
+    0: #000000,
+    10: #191b23,
+    20: #2d3039,
+    25: #393b44,
+    30: #44464f,
+    35: #50525b,
+    40: #5c5e67,
+    50: #747781,
+    60: #8e909a,
+    70: #a9abb5,
+    80: #c4c6d1,
+    90: #e1e2ed,
+    95: #eff0fb,
+    98: #faf8ff,
+    99: #fefbff,
+    100: #ffffff,
+    4: #0b0e16,
+    6: #10131b,
+    12: #1d1f27,
+    17: #272a32,
+    22: #32353d,
+    24: #363942,
+    87: #d8d9e5,
+    92: #e6e7f3,
+    94: #ecedf9,
+    96: #f2f3fe,
+  ),
+  neutral-variant: (
+    0: #000000,
+    10: #161b28,
+    20: #2b303d,
+    25: #363b49,
+    30: #424655,
+    35: #4d5261,
+    40: #595e6d,
+    50: #727786,
+    60: #8c90a0,
+    70: #a6abbb,
+    80: #c2c6d7,
+    90: #dee2f4,
+    95: #edf0ff,
+    98: #faf8ff,
+    99: #fefbff,
+    100: #ffffff,
+  ),
+  error: (
+    0: #000000,
+    10: #410002,
+    20: #690005,
+    25: #7e0007,
+    30: #93000a,
+    35: #a80710,
+    40: #ba1a1a,
+    50: #de3730,
+    60: #ff5449,
+    70: #ff897d,
+    80: #ffb4ab,
+    90: #ffdad6,
+    95: #ffedea,
+    98: #fff8f7,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+);
+
+$_rest: (
+  secondary: map.get($_palettes, secondary),
+  neutral: map.get($_palettes, neutral),
+  neutral-variant: map.get($_palettes,  neutral-variant),
+  error: map.get($_palettes, error),
+);
+$_primary: map.merge(map.get($_palettes, primary), $_rest);
+$_tertiary: map.merge(map.get($_palettes, tertiary), $_rest);
+
+
+
+// Define the theme object.
+$theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: $_primary,
+    tertiary: $_tertiary,
+    // use-system-variables: true,
+    // system-variables-prefix: md-sys-color,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+  @include mat.all-component-themes($theme);
+}
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($theme);
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+.primary-light {
+  @include mat.button-color($theme, $color-variant: secondary);
 }
 
 
-.light {
-        --md-sys-color-primary: rgb(0 104 116);
-        --md-sys-color-surface-tint: rgb(0 104 116);
-        --md-sys-color-on-primary: rgb(9 24 54);
-        --md-sys-color-primary-container: rgb(158 239 253);
-        --md-sys-color-on-primary-container: rgb(0 31 36);
-        --md-sys-color-secondary: rgb(0 104 116);
-        --md-sys-color-on-secondary: rgb(255 255 255);
-        --md-sys-color-secondary-container: rgb(158 239 253);
-        --md-sys-color-on-secondary-container: rgb(0 31 36);
-        --md-sys-color-tertiary: rgb(82 94 125);
-        --md-sys-color-on-tertiary: rgb(255 255 255);
-        --md-sys-color-tertiary-container: rgb(218 226 255);
-        --md-sys-color-on-tertiary-container: rgb(14 27 55);
-        --md-sys-color-error: rgb(186 26 26);
-        --md-sys-color-on-error: rgb(255 255 255);
-        --md-sys-color-error-container: rgb(255 218 214);
-        --md-sys-color-on-error-container: rgb(65 0 2);
-        --md-sys-color-background: rgb(245 250 251);
-        --md-sys-color-on-background: rgb(23 29 30);
-        --md-sys-color-surface: rgb(245 250 251);
-        --md-sys-color-on-surface: rgb(23 29 30);
-        --md-sys-color-surface-variant: rgb(219 228 230);
-        --md-sys-color-on-surface-variant: rgb(63 72 74);
-        --md-sys-color-outline: rgb(111 121 122);
-        --md-sys-color-outline-variant: rgb(191 200 202);
-        --md-sys-color-shadow: rgb(0 0 0);
-        --md-sys-color-scrim: rgb(0 0 0);
-        --md-sys-color-inverse-surface: rgb(43 49 51);
-        --md-sys-color-inverse-on-surface: rgb(236 242 243);
-        --md-sys-color-inverse-primary: rgb(130 211 224);
-        --md-sys-color-primary-fixed: rgb(158 239 253);
-        --md-sys-color-on-primary-fixed: rgb(0 31 36);
-        --md-sys-color-primary-fixed-dim: rgb(130 211 224);
-        --md-sys-color-on-primary-fixed-variant: rgb(0 79 88);
-        --md-sys-color-secondary-fixed: rgb(158 239 253);
-        --md-sys-color-on-secondary-fixed: rgb(0 31 36);
-        --md-sys-color-secondary-fixed-dim: rgb(130 211 224);
-        --md-sys-color-on-secondary-fixed-variant: rgb(0 79 88);
-        --md-sys-color-tertiary-fixed: rgb(218 226 255);
-        --md-sys-color-on-tertiary-fixed: rgb(14 27 55);
-        --md-sys-color-tertiary-fixed-dim: rgb(186 198 234);
-        --md-sys-color-on-tertiary-fixed-variant: rgb(59 70 100);
-        --md-sys-color-surface-dim: rgb(213 219 220);
-        --md-sys-color-surface-bright: rgb(245 250 251);
-        --md-sys-color-surface-container-lowest: rgb(255 255 255);
-        --md-sys-color-surface-container-low: rgb(239 245 246);
-        --md-sys-color-surface-container: rgb(233 239 240);
-        --md-sys-color-surface-container-high: rgb(227 233 234);
-        --md-sys-color-surface-container-highest: rgb(222 227 229);
-        --md-extended-color-electric-violet-color: rgb(105 84 141);
-        --md-extended-color-electric-violet-on-color: rgb(255 255 255);
-        --md-extended-color-electric-violet-color-container: rgb(235 220 255);
-        --md-extended-color-electric-violet-on-color-container: rgb(35 14 69);
-      }
-      
 
-.dark {
-        --md-sys-color-primary: rgb(130 211 224);
-        --md-sys-color-surface-tint: rgb(130 211 224);
-        --md-sys-color-on-primary: rgb(0 54 61);
-        --md-sys-color-primary-container: rgb(0 79 88);
-        --md-sys-color-on-primary-container: rgb(158 239 253);
-        --md-sys-color-secondary: rgb(130 211 224);
-        --md-sys-color-on-secondary: rgb(0 54 61);
-        --md-sys-color-secondary-container: rgb(0 79 88);
-        --md-sys-color-on-secondary-container: rgb(158 239 253);
-        --md-sys-color-tertiary: rgb(186 198 234);
-        --md-sys-color-on-tertiary: rgb(36 48 77);
-        --md-sys-color-tertiary-container: rgb(59 70 100);
-        --md-sys-color-on-tertiary-container: rgb(218 226 255);
-        --md-sys-color-error: rgb(255 180 171);
-        --md-sys-color-on-error: rgb(105 0 5);
-        --md-sys-color-error-container: rgb(147 0 10);
-        --md-sys-color-on-error-container: rgb(255 218 214);
-        --md-sys-color-background: rgb(14 20 21);
-        --md-sys-color-on-background: rgb(222 227 229);
-        --md-sys-color-surface: rgb(14 20 21);
-        --md-sys-color-on-surface: rgb(222 227 229);
-        --md-sys-color-surface-variant: rgb(63 72 74);
-        --md-sys-color-on-surface-variant: rgb(191 200 202);
-        --md-sys-color-outline: rgb(137 146 148);
-        --md-sys-color-outline-variant: rgb(63 72 74);
-        --md-sys-color-shadow: rgb(0 0 0);
-        --md-sys-color-scrim: rgb(0 0 0);
-        --md-sys-color-inverse-surface: rgb(222 227 229);
-        --md-sys-color-inverse-on-surface: rgb(43 49 51);
-        --md-sys-color-inverse-primary: rgb(0 104 116);
-        --md-sys-color-primary-fixed: rgb(158 239 253);
-        --md-sys-color-on-primary-fixed: rgb(0 31 36);
-        --md-sys-color-primary-fixed-dim: rgb(130 211 224);
-        --md-sys-color-on-primary-fixed-variant: rgb(0 79 88);
-        --md-sys-color-secondary-fixed: rgb(158 239 253);
-        --md-sys-color-on-secondary-fixed: rgb(0 31 36);
-        --md-sys-color-secondary-fixed-dim: rgb(130 211 224);
-        --md-sys-color-on-secondary-fixed-variant: rgb(0 79 88);
-        --md-sys-color-tertiary-fixed: rgb(218 226 255);
-        --md-sys-color-on-tertiary-fixed: rgb(14 27 55);
-        --md-sys-color-tertiary-fixed-dim: rgb(186 198 234);
-        --md-sys-color-on-tertiary-fixed-variant: rgb(59 70 100);
-        --md-sys-color-surface-dim: rgb(14 20 21);
-        --md-sys-color-surface-bright: rgb(52 58 59);
-        --md-sys-color-surface-container-lowest: rgb(9 15 16);
-        --md-sys-color-surface-container-low: rgb(23 29 30);
-        --md-sys-color-surface-container: rgb(27 33 34);
-        --md-sys-color-surface-container-high: rgb(37 43 44);
-        --md-sys-color-surface-container-highest: rgb(48 54 55);
-        --md-extended-color-electric-violet-color: rgb(212 187 252);
-        --md-extended-color-electric-violet-on-color: rgb(57 37 92);
-        --md-extended-color-electric-violet-color-container: rgb(80 60 116);
-        --md-extended-color-electric-violet-on-color-container: rgb(235 220 255);
-      }
-      

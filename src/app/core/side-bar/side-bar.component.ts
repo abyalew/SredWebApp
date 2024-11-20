@@ -48,6 +48,8 @@ export class SideBarComponent {
     iconRegistry.addSvgIcon('user_group_outlined', sanitizer.bypassSecurityTrustResourceUrl('/user_group_outlined.svg'));
     iconRegistry.addSvgIcon('dark_mode_outlined', sanitizer.bypassSecurityTrustResourceUrl('/dark_mode_outlined.svg'));
     iconRegistry.addSvgIcon('paper', sanitizer.bypassSecurityTrustResourceUrl('/paper.svg'));
+    iconRegistry.addSvgIcon('mail_outlined', sanitizer.bypassSecurityTrustResourceUrl('/mail_outlined.svg'));
+    iconRegistry.addSvgIcon('notifications_outlined', sanitizer.bypassSecurityTrustResourceUrl('/notifications_outlined.svg'));
 
   }
 
