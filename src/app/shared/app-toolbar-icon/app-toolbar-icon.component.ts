@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 
@@ -13,4 +13,9 @@ export class AppToolbarIconComponent {
   @Input() icon = '';
   @Input() svgIcon = '';
   @Input() badge = 0;
+  @Output() clicked = new EventEmitter<string>();
+
+  onClick(){
+    this.clicked.emit();
+  }
 }

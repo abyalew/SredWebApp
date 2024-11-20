@@ -52,19 +52,28 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <mat-toolbar class="sred-mat-toolbar">
+          <mat-toolbar-row class="sred-mat-toolbar-row">
             <button mat-icon-button aria-label="toggle side nav" (click)="sidenav.toggle()">
               <mat-icon svgIcon="panel-close"></mat-icon>
             </button>
             <app-search-input class="sred-mat-toolbar-search-input" *ngIf="!isSmallViewPort()"></app-search-input>
             
             <span class="spacer"></span>
-            <app-toolbar-icon svgIcon="search" class="sred-mat-toolbar-notification-spacing" *ngIf="isSmallViewPort()"></app-toolbar-icon>
+            <app-toolbar-icon icon="search" class="sred-mat-toolbar-notification-spacing" [ngClass]="showSearchInput ? 'active' : ''"
+              *ngIf="isSmallViewPort()" (clicked)="onShowSearchInput()">
+            </app-toolbar-icon>
             <app-toolbar-icon svgIcon="mail_outlined" [badge]="2" class="sred-mat-toolbar-notification-spacing"></app-toolbar-icon>
             <app-toolbar-icon svgIcon="notifications_outlined" [badge]="8" class="sred-mat-toolbar-notification-spacing"></app-toolbar-icon>
-            <app-toolbar-icon icon="calendar_today" class="sred-mat-toolbar-notification-spacing" *ngIf="isSmallViewPort()"></app-toolbar-icon>
+            <app-toolbar-icon icon="calendar_today" class="sred-mat-toolbar-notification-spacing" [ngClass]="showDateRangePicker ? 'active' : ''" 
+            *ngIf="isSmallViewPort()" (clicked)="onShowDateRangePicker()"></app-toolbar-icon>
             <mat-divider [vertical]="true"></mat-divider>
             <sred-date-range-picker *ngIf="!isSmallViewPort()"></sred-date-range-picker>
+          </mat-toolbar-row>
+          <mat-toolbar-row class="sred-mat-toolbar-row" *ngIf="isSmallViewPort() && (showSearchInput || showDateRangePicker)">
+            <app-search-input *ngIf="showSearchInput" class="fill-available"></app-search-input>
+            <sred-date-range-picker *ngIf="showDateRangePicker" class="fill-available"></sred-date-range-picker>
 
+          </mat-toolbar-row>
 
           </mat-toolbar>
 

@@ -1,26 +1,20 @@
-<mat-grid-list cols="4" gutterSize="15">
-    <mat-grid-tile colspan="1">
-        <mat-card appearance="outlined" class="child-card">
-            <mat-card-content>
-                <div fxLayout="column" fxFlexFill  class="chart-wrapper">
-                    <app-spinner *ngIf="dataLoader.isLoading" class="fill-available"></app-spinner>
-                    <ag-charts *ngIf="!dataLoader.isLoading" [options]="chartOptions()"
-                        class="chart-container fill-available">
-                    </ag-charts>
-                </div>
-            </mat-card-content>
-        </mat-card> 
-    </mat-grid-tile>
-    <mat-grid-tile colspan="3">
-        <mat-card appearance="outlined" class="child-card">
-            <mat-card-content>
-                <div fxLayout="column" fxFlexFill class="chart-wrapper">
-                    <app-spinner *ngIf="barChartDataLoader.isLoading"  class="fill-available"></app-spinner>
-                    <ag-charts  *ngIf="!barChartDataLoader.isLoading" [options]="barChartOptions()"
-                        class="chart-container fill-available">
-                    </ag-charts>
-                </div>
-            </mat-card-content>
-        </mat-card>
-    </mat-grid-tile>
-</mat-grid-list>
+<mat-card appearance="outlined" class="child-card" [ngClass]="smallView() ? 'grid-col-span-2' : ''">
+    <mat-card-content>
+        <div fxLayout="column" fxFlexFill  class="chart-wrapper">
+            <app-spinner *ngIf="dataLoader.isLoading" class="fill-available"></app-spinner>
+            <ag-charts *ngIf="!dataLoader.isLoading" [options]="chartOptions()"
+                class="chart-container fill-available">
+            </ag-charts>
+        </div>
+    </mat-card-content>
+</mat-card> 
+<mat-card appearance="outlined" class="child-card grid-col-span-2">
+    <mat-card-content>
+        <div fxLayout="column" fxFlexFill class="chart-wrapper">
+            <app-spinner *ngIf="barChartDataLoader.isLoading"  class="fill-available"></app-spinner>
+            <ag-charts  *ngIf="!barChartDataLoader.isLoading" [options]="barChartOptions()"
+                class="chart-container fill-available">
+            </ag-charts>
+        </div>
+    </mat-card-content>
+</mat-card>

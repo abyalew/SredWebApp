@@ -42,7 +42,8 @@ export class SideBarComponent {
   isSmallViewPort = computed(()=> {
     return this.responsiveService.smallWidth() || this.responsiveService.extraSmallWidth();
   });
-  
+  showSearchInput: boolean = false;
+  showDateRangePicker: boolean = false;
   constructor() {
     const iconRegistry = inject(MatIconRegistry);
     const sanitizer = inject(DomSanitizer);
@@ -61,4 +62,13 @@ export class SideBarComponent {
 
   }
 
+  onShowSearchInput() {
+    this.showDateRangePicker = false;
+    this.showSearchInput = !this.showSearchInput;
+  }
+
+  onShowDateRangePicker() {
+    this.showSearchInput = false;
+    this.showDateRangePicker = !this.showDateRangePicker;
+  }
 }

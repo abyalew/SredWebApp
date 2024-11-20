@@ -1,4 +1,4 @@
-import { Component, computed, OnDestroy, signal, Signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, signal, Signal } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import { AgCharts } from 'ag-charts-angular';
 import { AgChartOptions } from 'ag-charts-community';
@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from '../../../shared/spinner/spinner.component';
 import { FilterParam, RefreshEventService } from '../../../services/refreshEvent.service';
 import { Subscription } from 'rxjs';
+import { ResponsiveService } from '../../../services/responsive.service';
 
 @Component({
   selector: 'dashboard-overall-hours',
@@ -26,6 +27,10 @@ export class OverallHoursComponent implements OnDestroy {
   barChartDataLoader: DataLoader<TimesheetByMonth[]>;
   refreshEventSubscription: Subscription;
 
+  responsiveService: ResponsiveService = inject(ResponsiveService);
+  smallView = computed(()=>
+    this.responsiveService.smallWidth() || 
+    this.responsiveService.extraSmallWidth());
   constructor(private readonly dashboardService : DashboardService, refreshEventService: RefreshEventService) {
 
     this.dataLoader = new DataLoader<SimpleObject[]>();
@@ -33,7 +38,6 @@ export class OverallHoursComponent implements OnDestroy {
 
     this.refreshEventSubscription = refreshEventService.refreshObservable.subscribe((filterParam)=> {
       this.loadData(filterParam);
-      
     });
 
     this.loadData(undefined);
