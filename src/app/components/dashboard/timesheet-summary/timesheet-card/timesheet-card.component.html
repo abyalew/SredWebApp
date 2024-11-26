@@ -5,11 +5,6 @@
     <mat-card-content class="status-detail">
         <span class="text-lg">{{ data.value }}</span> 
         <span class="spacer"></span>
-        <!-- <mat-basic-chip class="text-xs-bold" [ngClass]="data.status >= 0 ? 'positive-status' : 'negative-status'">
-            <mat-icon inline *ngIf="data.status >= 0">arrow_upward</mat-icon>
-            <mat-icon inline *ngIf="data.status < 0">arrow_downward</mat-icon>
-            {{ data.percentage }}%
-        </mat-basic-chip> -->
         <button mat-button class="movement" [ngClass]="data.status >= 0 ? 'positive' : 'negative'">
             <mat-icon inline *ngIf="data.status >= 0">arrow_upward</mat-icon>
             <mat-icon inline *ngIf="data.status < 0">arrow_downward</mat-icon>

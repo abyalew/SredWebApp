@@ -1,11 +1,9 @@
-<div>
-    <div *ngIf="!dataLoader.isLoading" class="timesheet-card-container">
-        <timesheet-card *ngFor="let report of timesheetSummaryReports()" [data]="report"></timesheet-card>
-    </div>
-
-    <mat-grid-list cols="1" gutterSize="15" rowHeight="94" *ngIf="dataLoader.isLoading">
-        <mat-grid-tile colspan="1">
-            <app-spinner class="fill-available"></app-spinner>
-        </mat-grid-tile>
-    </mat-grid-list>
+<div *ngIf="!dataLoader.isLoading" class="grid grid-row grid-cols-300 gap-4 lg:flex lg:flex-row lg:space-x-4 lg:space-y-0 lg:flex-wrap">
+    <timesheet-card *ngFor="let report of timesheetSummaryReports()" [data]="report" class="grow shrink-0"></timesheet-card>
 </div>
+
+<mat-grid-list cols="1" gutterSize="15" rowHeight="94" *ngIf="dataLoader.isLoading">
+    <mat-grid-tile colspan="1">
+        <app-spinner class="fill-available"></app-spinner>
+    </mat-grid-tile>
+</mat-grid-list>
