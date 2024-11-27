@@ -7,7 +7,9 @@
 :root {
     --mdc-outlined-button-container-shape : 8px;
     --mdc-text-button-container-shape : 8px;
-    --mdc-outlined-button-outline-color: #D1D1D1;
+    --mdc-filled-button-container-shape: 8px;
+    --mdc-protected-button-container-shape: 8px;
+    --mdc-outlined-button-outline-color: #1A71F6;
     --mat-datepicker-calendar-container-background-color: #FFFFFF;
 
 
@@ -161,6 +163,7 @@ body {
 
 
 .sred-mat-sidenav-container {
+    min-height: 100vh;
     --mat-sidenav-container-width: 280px;
     --mat-sidenav-container-background-color: #FFFFFF;
     --mat-sidenav-content-background-color: #F7F9FB;

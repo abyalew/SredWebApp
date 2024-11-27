@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>{{ editMode ? 'Edit Project' : 'Create Project' }}</h2>
+<mat-dialog-content>
+    <div class="flex flex-col space-y-3 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 p-2">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Name</mat-label>
+          <input matInput required />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Integration</mat-label>
+            <input matInput />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="col-span-2">
+            <mat-label>Description</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+  
+        <mat-checkbox>Is Included</mat-checkbox>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Submit</button>
+</mat-dialog-actions>
