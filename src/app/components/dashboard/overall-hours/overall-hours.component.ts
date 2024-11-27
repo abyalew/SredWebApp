@@ -79,7 +79,11 @@ export class OverallHoursComponent implements OnDestroy {
     this.barChartOptions = computed(() : AgChartOptions => {
       return {
         data: this.barChartDataLoader.data()?.map(x => { 
-          return { month: x.month, cumulativeHours: Number(x.cumulativeHours), tootalHours: Number(x.tootalHours)};
+          return { 
+            month: x.month, 
+            cumulativeHours: Number(x.cumulativeHours), 
+            tootalHours: Number(x.tootalHours)
+          };
         }),
         series: [
           {

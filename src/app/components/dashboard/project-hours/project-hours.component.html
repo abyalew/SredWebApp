@@ -1,14 +1,9 @@
-<mat-grid-list cols="1" gutterSize="0" rowHeight="337">
-    <mat-grid-tile colspan="1">
-        <mat-card appearance="outlined" class="child-card">
-            <mat-card-content>
-                <app-spinner *ngIf="dataLoader.isLoading" class="fill-available"></app-spinner>
-                <div *ngIf="!dataLoader.isLoading" fxLayout="column" fxFlexFill  class="chart-wrapper">
-                    <ag-charts [options]="chartOptions()"
-                        class="chart-container fill-available">
-                    </ag-charts>
-                </div>
-            </mat-card-content>
-        </mat-card>
-    </mat-grid-tile>
-</mat-grid-list>
+<mat-card appearance="outlined">
+    <mat-card-content>
+        <app-spinner *ngIf="dataLoader.isLoading"></app-spinner>
+        <div *ngIf="!dataLoader.isLoading">
+            <ag-charts [options]="chartOptions()" class="flex">
+            </ag-charts>
+        </div>
+    </mat-card-content>
+</mat-card>

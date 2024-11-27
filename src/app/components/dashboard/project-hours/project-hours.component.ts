@@ -46,7 +46,8 @@ export class ProjectHoursComponent implements OnDestroy {
           itemStyler:({ datum, xKey, fill, highlighted }) => {
             return {
               fill: datum.color,
-              barPadding: 0.2
+              barPadding: 0.8,
+              cornerRadius: 4
             };
           },
         },

@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container flex flex-col">
     <dashboard-filter-section (searchValueChanged)="onSearchChanged($event)"></dashboard-filter-section>
     <app-spinner *ngIf="dataLoader.isLoading" class="fill-available"></app-spinner>
     <ag-grid-angular *ngIf="!dataLoader.isLoading"
-        class="ag-theme-quartz table"
+        class="ag-theme-quartz fill-available"
         [rowData]="rowData()"
         [columnDefs]="colDefs"
         [defaultColDef]="defaultColDef"

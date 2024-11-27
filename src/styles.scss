@@ -43,9 +43,7 @@ html, body { height: 100%; }
 
 
 body { 
-    margin: 0; font-family: Roboto, "Manrope", sans-serif; 
-    // background: #F7F9FB;
-    
+    margin: 0; font-family: Roboto, Manrope, sans-serif;   
 }
 
 .spacer {
@@ -53,14 +51,14 @@ body {
 }
 
 .semibold-heading-5 {
-    font-family: 'Manrope';
+    font-family: Manrope, sans-serif;
     font-weight: 600;
     font-size: 28px;
     line-height: normal;
 }
 
 .medium-text-sm {
-    font-family: 'Manrope';
+    font-family: Manrope, sans-serif;
     font-weight: normal;
     font-size: 16px;
     line-height: 150%;
@@ -90,7 +88,7 @@ body {
 }
 
 .text-xs-bold {
-    font-family: 'Plus Jakarta Sans';
+    font-family: Plus Jakarta, sans-serif;
     font-weight: bold;
     font-size: 12px;
     line-height: 140%;
