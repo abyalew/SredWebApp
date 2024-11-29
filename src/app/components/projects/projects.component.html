@@ -5,7 +5,7 @@
         </span>
     </div>
     <span class="spacer"></span>
-    <button mat-flat-button class="mr-1" (click)="openDialog()">
+    <button mat-flat-button class="mr-1" (click)="onCreate()">
         Create
         <mat-icon>add</mat-icon>
     </button>
@@ -20,6 +20,7 @@
         [rowData]="rowData"
         [columnDefs]="colDefs"
         [defaultColDef]="defaultColDef"
+        (gridReady)="onGridReady($event)"
         rowClass="table-row"
     />
 </div>

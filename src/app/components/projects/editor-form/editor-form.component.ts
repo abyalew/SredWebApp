@@ -7,6 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {CommonModule} from '@angular/common';
 import {Project} from '../../../models/project';
+import {Store} from '@ngrx/store';
+import {selectProjectOnEdit} from '../../../state/projects/project.selector';
+import {AppState} from '../../../state/app.state';
+import {addProject, closeEditForm} from '../../../state/projects/project.actions';
 
 @Component({
   selector: 'project-editor-form',
@@ -18,22 +22,30 @@ import {Project} from '../../../models/project';
 export class EditorFormComponent {
   @Output() submitted = new EventEmitter();
 
-  readonly data = inject<Project>(MAT_DIALOG_DATA);
-  readonly projectId = model(this.data.id);
-  readonly projectName = model(this.data.name);
-  readonly projectDescription = model(this.data.description);
-  readonly projectIntegration = model(this.data.integrationOf);
-  readonly projectIsIncluded = model(this.data.isIncluded);
+  constructor(private store: Store<AppState>) {
+    this.store.select(selectProjectOnEdit).subscribe(project => {
+      this.editMode = true;
+      this.projectOnEdit = project;
 
-  editMode: boolean = !!this.projectId;
+      this.projectForm = this.formBuilder.group({
+        name: [ project?.name || '' , Validators.required ],
+        description: [ project?.description || '', Validators.required ],
+        integration: [ project?.integrationOf || '', Validators.required ],
+        isIncluded: [ project?.isIncluded ]
+      });
+    })
+  }
+
+  projectOnEdit: Project | null  = null;
+  editMode: boolean = false;
 
   formBuilder = inject(FormBuilder);
 
   projectForm: FormGroup = this.formBuilder.group({
-    name: [this.projectName() || '' , Validators.required],
-    description: [this.projectDescription() || '', Validators.required],
-    integration: [this.projectIntegration() || '', Validators.required],
-    isIncluded: [ this.projectIsIncluded() ]
+    name: ['' , Validators.required],
+    description: ['', Validators.required],
+    integration: ['', Validators.required],
+    isIncluded: [ false ]
   });
 
   get name(){
@@ -48,9 +60,12 @@ export class EditorFormComponent {
 
   submit() {
     if(!this.projectForm.valid){
-      console.log("invalid form");
       return;
     }
-    this.submitted.emit(this.projectForm.value);
+    this.store.dispatch(addProject({...this.projectForm.value, id: this.projectOnEdit?.id}));
+  }
+
+  cancel() {
+    this.store.dispatch(closeEditForm());
   }
 }

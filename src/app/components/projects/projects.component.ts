@@ -1,13 +1,17 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { Project } from '../../models/project';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import { EditorFormComponent } from './editor-form/editor-form.component';
 import { FileUploadDialogComponent } from '../../shared/file-upload-dialog/file-upload-dialog.component';
 import {EditActionRendererComponent} from './edit-action-renderer/edit-action-renderer.component';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../state/app.state';
+import {selectAllProjects, selectEditorStatus} from '../../state/projects/project.selector';
+import {addProject, loadProjects, openEditForm} from '../../state/projects/project.actions';
 
 @Component({
   selector: 'projects',
@@ -16,11 +20,10 @@ import {EditActionRendererComponent} from './edit-action-renderer/edit-action-re
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
-export class ProjectsComponent {
+export class ProjectsComponent implements OnInit {
   readonly dialog = inject(MatDialog);
-  dialogConfig: MatDialogConfig = {
-    disableClose: true,
-  }
+  editorDialog: MatDialogRef<EditorFormComponent> | null = null;
+
   colDefs: ColDef[] = [
     { field: 'name'},
     { field: 'description' },
@@ -44,129 +47,53 @@ export class ProjectsComponent {
     flex: 1,
   };
 
-  rowData: Project[] = [
-    {
-      id: 1,
-      name: 'test 1',
-      createdBy: 'sredAdmin',
-      createdOn: new Date(),
-      isIncluded: false,
-      description: 'my test project',
-      integrationOf: 'the integration',
-      timeRecords: '235',
-      totalHours: '300'
-    },
-    {
-      id: 2,
-      name: 'test 1',
-      createdBy: 'sredAdmin',
-      createdOn: new Date(),
-      isIncluded: true,
-      description: 'my test project',
-      integrationOf: 'the integration',
-      timeRecords: '235',
-      totalHours: '300'
-    },
-    {
-      id: 3,
-      name: 'test 1',
-      createdBy: 'sredAdmin',
-      createdOn: new Date(),
-      isIncluded: false,
-      description: 'my test project',
-      integrationOf: 'the integration',
-      timeRecords: '235',
-      totalHours: '300'
-    },
-    {
-      id: 4,
-      name: 'test 1',
-      createdBy: 'sredAdmin',
-      createdOn: new Date(),
-      isIncluded: false,
-      description: 'my test project',
-      integrationOf: 'the integration',
-      timeRecords: '235',
-      totalHours: '300'
-    },
-    {
-      id: 5,
-      name: 'test 1',
-      createdBy: 'sredAdmin',
-      createdOn: new Date(),
-      isIncluded: true,
-      description: 'my test project',
-      integrationOf: 'the integration',
-      timeRecords: '235',
-      totalHours: '300'
-    },
-    {
-      id: 6,
-      name: 'test 1',
-      createdBy: 'sredAdmin',
-      createdOn: new Date(),
-      isIncluded: true,
-      description: 'my test project',
-      integrationOf: 'the integration',
-      timeRecords: '235',
-      totalHours: '300'
-    },
-    {
-      id: 7,
-      name: 'test 1',
-      createdBy: 'sredAdmin',
-      createdOn: new Date(),
-      isIncluded: false,
-      description: 'my test project',
-      integrationOf: 'the integration',
-      timeRecords: '235',
-      totalHours: '300'
-    },
-    {
-      id: 8,
-      name: 'test 1',
-      createdBy: 'sredAdmin',
-      createdOn: new Date(),
-      isIncluded: true,
-      description: 'my test project',
-      integrationOf: 'the integration',
-      timeRecords: '235',
-      totalHours: '300'
-    },
-    {
-      id: 9,
-      name: 'test 1',
-      createdBy: 'sredAdmin',
-      createdOn: new Date(),
-      isIncluded: false,
-      description: 'my test project',
-      integrationOf: 'the integration',
-      timeRecords: '235',
-      totalHours: '300'
-    },
-  ];
+  rowData: Project[] = [];
 
-  openDialog() {
-    const dialogRef = this.dialog.open(EditorFormComponent, this.dialogConfig);
+  constructor(private store: Store<AppState>) {
+    this.store.select(selectAllProjects).subscribe(projects => {
+      this.rowData = projects;
+    })
+    this.store.select(selectEditorStatus).subscribe(editorStatus => {
+      if(editorStatus === 'opened') {
+        this.openEditorDialog();
+      }
+      if (editorStatus === 'closed') {
+        this.loadProjects();
+        this.closeEditorDialog();
+      }
+    })
+  }
 
-    dialogRef.componentInstance.submitted.subscribe((newProject) =>{
-      console.log('Submitted', newProject);
-    });
+  ngOnInit() {
+    this.loadProjects();
+  }
 
-    dialogRef.afterClosed().subscribe(() => {
-      //refresh grid
-    });
+  onCreate(){
+    this.store.dispatch(openEditForm({ project: null }));
+  }
+
+  loadProjects(): void {
+    this.store.dispatch(loadProjects());
+  }
+
+  openEditorDialog(project: Project | null = null) {
+    this.editorDialog = this.dialog.open(EditorFormComponent, { data: project , disableClose: true });
+  }
+
+  closeEditorDialog() {
+    if(this.editorDialog)
+      this.editorDialog.close();
   }
 
   openUploadDialog() {
     const dialogRef = this.dialog.open(FileUploadDialogComponent);
+  }
 
-    dialogRef.afterClosed().subscribe(() => {
-      //refresh grid
-    });
+  onGridReady(params: any): void {
+    params.api.sizeColumnsToFit();
   }
 
   editRow(data: any) {
-    this.dialog.open(EditorFormComponent, { data, disableClose: true });
+    this.store.dispatch(openEditForm({project: data}));
   }
 }
