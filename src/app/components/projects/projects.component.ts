@@ -6,22 +6,22 @@ import { ColDef } from 'ag-grid-community';
 import { Project } from '../../models/project';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditorFormComponent } from './editor-form/editor-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { FileUploadDialogComponent } from '../../shared/file-upload-dialog/file-upload-dialog.component';
+import {EditActionRendererComponent} from './edit-action-renderer/edit-action-renderer.component';
 
 @Component({
   selector: 'projects',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, AgGridAngular, ReactiveFormsModule],
+  imports: [MatIconModule, MatButtonModule, AgGridAngular],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
 export class ProjectsComponent {
   readonly dialog = inject(MatDialog);
   dialogConfig: MatDialogConfig = {
-    disableClose: true
+    disableClose: true,
   }
-  colDefs: ColDef<Project>[] = [
+  colDefs: ColDef[] = [
     { field: 'name'},
     { field: 'description' },
     { field: 'integrationOf' },
@@ -29,7 +29,15 @@ export class ProjectsComponent {
     { field: 'totalHours' },
     { field: 'createdBy' },
     { field: 'createdOn' },
-    { field: 'isIncluded' }
+    { field: 'isIncluded' },
+    { field: 'Action', cellRenderer: EditActionRendererComponent,
+      cellRendererParams: {
+        onEdit: (params: any) => this.editRow(params),
+      },
+      width: 50,
+      maxWidth: 100,
+      suppressSizeToFit: true
+    },
   ];
 
   defaultColDef: ColDef = {
@@ -38,6 +46,7 @@ export class ProjectsComponent {
 
   rowData: Project[] = [
     {
+      id: 1,
       name: 'test 1',
       createdBy: 'sredAdmin',
       createdOn: new Date(),
@@ -48,6 +57,7 @@ export class ProjectsComponent {
       totalHours: '300'
     },
     {
+      id: 2,
       name: 'test 1',
       createdBy: 'sredAdmin',
       createdOn: new Date(),
@@ -58,6 +68,7 @@ export class ProjectsComponent {
       totalHours: '300'
     },
     {
+      id: 3,
       name: 'test 1',
       createdBy: 'sredAdmin',
       createdOn: new Date(),
@@ -68,6 +79,7 @@ export class ProjectsComponent {
       totalHours: '300'
     },
     {
+      id: 4,
       name: 'test 1',
       createdBy: 'sredAdmin',
       createdOn: new Date(),
@@ -78,6 +90,7 @@ export class ProjectsComponent {
       totalHours: '300'
     },
     {
+      id: 5,
       name: 'test 1',
       createdBy: 'sredAdmin',
       createdOn: new Date(),
@@ -88,6 +101,7 @@ export class ProjectsComponent {
       totalHours: '300'
     },
     {
+      id: 6,
       name: 'test 1',
       createdBy: 'sredAdmin',
       createdOn: new Date(),
@@ -98,6 +112,7 @@ export class ProjectsComponent {
       totalHours: '300'
     },
     {
+      id: 7,
       name: 'test 1',
       createdBy: 'sredAdmin',
       createdOn: new Date(),
@@ -108,6 +123,7 @@ export class ProjectsComponent {
       totalHours: '300'
     },
     {
+      id: 8,
       name: 'test 1',
       createdBy: 'sredAdmin',
       createdOn: new Date(),
@@ -118,6 +134,7 @@ export class ProjectsComponent {
       totalHours: '300'
     },
     {
+      id: 9,
       name: 'test 1',
       createdBy: 'sredAdmin',
       createdOn: new Date(),
@@ -132,6 +149,10 @@ export class ProjectsComponent {
   openDialog() {
     const dialogRef = this.dialog.open(EditorFormComponent, this.dialogConfig);
 
+    dialogRef.componentInstance.submitted.subscribe((newProject) =>{
+      console.log('Submitted', newProject);
+    });
+
     dialogRef.afterClosed().subscribe(() => {
       //refresh grid
     });
@@ -143,5 +164,9 @@ export class ProjectsComponent {
     dialogRef.afterClosed().subscribe(() => {
       //refresh grid
     });
+  }
+
+  editRow(data: any) {
+    this.dialog.open(EditorFormComponent, { data, disableClose: true });
   }
 }
