@@ -9,4 +9,5 @@ export const closeEditForm = createAction('[Project Page] Close Edit Form');
 export const addProject = createAction('[Project Page] Add Project',props<Project>());
 export const addProjectSuccess = createAction('[Project Page] Add Project Success',props<Project>());
 export const addProjectFailure = createAction('[Project Page] Add Project Failure',props<{ error: string }>());
-export const updateProject = createAction('[Project Page] Update Project',props<Project>());
+export const bulkSave = createAction('[Project Page] Bulk Save',props<{ projects: Project[] }>());
+export const bulkSaveSuccess = createAction('[Project Page] Bulk Save Success',props<{ projects: Project[] }>());

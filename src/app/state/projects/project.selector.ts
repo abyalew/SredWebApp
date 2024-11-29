@@ -17,3 +17,8 @@ export const selectProjectOnEdit = createSelector(
   selectProjectsState,
   (state: ProjectState) => state.projectOnEdit
 );
+
+export const selectUploadStatus = createSelector(
+  selectProjectsState,
+  (state: ProjectState) => state.uploadStatus
+);

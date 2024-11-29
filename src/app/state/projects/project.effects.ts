@@ -6,7 +6,7 @@ import {ProjectService} from '../../services/project.service';
 import {
   addProject,
   addProjectFailure,
-  addProjectSuccess, closeEditForm,
+  addProjectSuccess, bulkSave, closeEditForm,
   loadProjects,
   loadProjectsFailure,
   loadProjectsSuccess
@@ -36,6 +36,18 @@ export class ProjectEffects {
       ofType(addProject),
       switchMap(project =>
         this.projectService.saveProject(project).pipe(
+          map(() => closeEditForm()),
+          catchError(error => of(addProjectFailure({error})))
+        )
+      )
+    )
+  )
+
+  saveProjects$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(bulkSave),
+      switchMap(({ projects }) =>
+        this.projectService.saveProjects(projects).pipe(
           map(() => closeEditForm()),
           catchError(error => of(addProjectFailure({error})))
         )

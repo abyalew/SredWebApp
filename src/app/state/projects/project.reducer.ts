@@ -3,7 +3,7 @@ import {createReducer, on} from '@ngrx/store';
 import {
   addProject,
   addProjectFailure,
-  addProjectSuccess, closeEditForm,
+  addProjectSuccess, bulkSave, bulkSaveSuccess, closeEditForm,
   loadProjects,
   loadProjectsFailure,
   loadProjectsSuccess, openEditForm,
@@ -16,6 +16,7 @@ export interface ProjectState {
   saveStatus: 'pending' | 'loading' | 'error' | 'success';
   editorFormStatus: 'opened' | 'closed';
   projectOnEdit: Project | null;
+  uploadStatus: 'pending' | 'loading' | 'error' | 'success';
 }
 
 const initialState: ProjectState = {
@@ -25,6 +26,7 @@ const initialState: ProjectState = {
   saveStatus: 'loading',
   editorFormStatus: 'closed',
   projectOnEdit: null,
+  uploadStatus: 'pending',
 }
 
 export const projectReducer = createReducer(
@@ -44,6 +46,10 @@ export const projectReducer = createReducer(
     ...state, saveStatus: 'success', })),
   on(addProjectFailure, (state, content): ProjectState => ({
     ...state, saveStatus: 'error', })),
+  on(bulkSave, (state, content): ProjectState => ({
+    ...state, uploadStatus: 'loading', })),
+  on(bulkSaveSuccess, (state, content): ProjectState => ({
+    ...state, uploadStatus: 'success', }))
 )
 
 

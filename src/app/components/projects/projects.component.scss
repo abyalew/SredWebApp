@@ -1,5 +1,7 @@
 :host {
+  display: block;
     min-height: 500px;
+  overflow: auto;
 }
 
 
@@ -8,4 +10,8 @@
 }
 .table {
     height: 600px;
+    min-width: 1500px;
+}
+.table-container{
+  overflow: auto;
 }

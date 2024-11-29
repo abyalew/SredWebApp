@@ -17,4 +17,9 @@ export class ProjectService {
     const url = this.baseUrl + (project.id ? 'update' : 'AddProject');
     return this.httpClient.post<Project>(url, project);
   }
+
+  saveProjects(projects: Project[]) : Observable<Project[]> {
+    const url = this.baseUrl + 'AddProjects';
+    return this.httpClient.post<Project[]>(url, projects);
+  }
 }

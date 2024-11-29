@@ -6,15 +6,16 @@
     </div>
     <span class="spacer"></span>
     <button mat-flat-button class="mr-1" (click)="onCreate()">
-        Create
+        <span class="hidden sm:block">Create</span>
         <mat-icon>add</mat-icon>
     </button>
     <button mat-stroked-button (click)="openUploadDialog()">
-        Upload CSV
+      <span class="hidden sm:block">Upload CSV</span>
+
         <mat-icon>publish</mat-icon>
     </button>
 </div>
-<div class="flex flex-col">
+<div class="flex flex-col table-container">
     <ag-grid-angular
         class="ag-theme-quartz table"
         [rowData]="rowData"

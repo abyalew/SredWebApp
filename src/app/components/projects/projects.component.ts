@@ -10,8 +10,8 @@ import { FileUploadDialogComponent } from '../../shared/file-upload-dialog/file-
 import {EditActionRendererComponent} from './edit-action-renderer/edit-action-renderer.component';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../state/app.state';
-import {selectAllProjects, selectEditorStatus} from '../../state/projects/project.selector';
-import {addProject, loadProjects, openEditForm} from '../../state/projects/project.actions';
+import {selectAllProjects, selectEditorStatus, selectUploadStatus} from '../../state/projects/project.selector';
+import { loadProjects, openEditForm } from '../../state/projects/project.actions';
 
 @Component({
   selector: 'projects',
@@ -25,14 +25,14 @@ export class ProjectsComponent implements OnInit {
   editorDialog: MatDialogRef<EditorFormComponent> | null = null;
 
   colDefs: ColDef[] = [
-    { field: 'name'},
+    { field: 'name', maxWidth: 160},
     { field: 'description' },
     { field: 'integrationOf' },
     { field: 'timeRecords' },
     { field: 'totalHours' },
-    { field: 'createdBy' },
-    { field: 'createdOn' },
-    { field: 'isIncluded' },
+    { field: 'createdBy', maxWidth: 160 },
+    { field: 'createdOn', maxWidth: 160, valueFormatter: (v) => v.value.toString().split('T')[0] },
+    { field: 'isIncluded', maxWidth: 160 },
     { field: 'Action', cellRenderer: EditActionRendererComponent,
       cellRendererParams: {
         onEdit: (params: any) => this.editRow(params),
@@ -87,6 +87,13 @@ export class ProjectsComponent implements OnInit {
 
   openUploadDialog() {
     const dialogRef = this.dialog.open(FileUploadDialogComponent);
+    const sub = this.store.select(selectUploadStatus).subscribe(status => {
+      if(status === 'success') {
+        dialogRef.close();
+        sub.unsubscribe();
+        this.loadProjects();
+      }
+    })
   }
 
   onGridReady(params: any): void {
