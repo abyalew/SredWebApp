@@ -23,7 +23,7 @@ const initialState: ProjectState = {
   projects: [],
   error: null,
   loadStatus: 'pending',
-  saveStatus: 'loading',
+  saveStatus: 'pending',
   editorFormStatus: 'closed',
   projectOnEdit: null,
   uploadStatus: 'pending',
@@ -39,7 +39,7 @@ export const projectReducer = createReducer(
   on(openEditForm, (state, { project }): ProjectState => ({
     ...state, editorFormStatus: 'opened', projectOnEdit: project })),
   on(closeEditForm, (state): ProjectState => ({
-    ...state, editorFormStatus: 'closed' })),
+    ...state, editorFormStatus: 'closed', saveStatus: 'pending' })),
   on(addProject, (state, content): ProjectState => ({
     ...state, saveStatus: 'loading' })),
   on(addProjectSuccess, (state, content): ProjectState => ({

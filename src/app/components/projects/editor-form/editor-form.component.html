@@ -13,7 +13,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Integration</mat-label>
-        <input matInput formControlName="integration" />
+        <input matInput formControlName="integrationOf" />
         <mat-error *ngIf="integration?.invalid && (integration?.dirty || integration?.touched)">
           <span *ngIf="integration?.hasError('required')">
             Integration from is required.
@@ -36,5 +36,8 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button (click)="cancel()">Cancel</button>
-  <button mat-button cdkFocusInitial [disabled]="!projectForm.valid" (click)="submit()"><strong>Submit</strong></button>
+  <button mat-button cdkFocusInitial [disabled]="!projectForm.valid" (click)="submit()">
+    <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
+    <strong *ngIf="!loading">Submit</strong>
+  </button>
 </mat-dialog-actions>

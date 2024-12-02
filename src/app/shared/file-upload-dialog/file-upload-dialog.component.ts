@@ -12,7 +12,6 @@ import {AgGridAngular} from 'ag-grid-angular';
 import {AppState} from '../../state/app.state';
 import {Store} from '@ngrx/store';
 import {bulkSave} from '../../state/projects/project.actions';
-import {selectUploadStatus} from '../../state/projects/project.selector';
 
 @Component({
   selector: 'app-file-upload-dialog',
@@ -43,9 +42,7 @@ export class FileUploadDialogComponent {
 
   rowData: Project[] = [];
 
-  constructor(private ngxCsvParser: NgxCsvParser, private store: Store<AppState>) {
-
-  }
+  constructor(private ngxCsvParser: NgxCsvParser, private store: Store<AppState>) {}
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
 
@@ -54,10 +51,9 @@ export class FileUploadDialogComponent {
 
       this.header = (this.header as unknown as string) === 'true' || this.header === true;
 
-      this.ngxCsvParser.parse(file, { header: this.header, delimiter: ',', encoding: 'utf8' })
+      const sub = this.ngxCsvParser.parse(file, { header: this.header, delimiter: ',', encoding: 'utf8' })
         .pipe().subscribe({
         next: (result): void => {
-          console.log('Result', result);
           const data = (result as any[]);
           const headers = data[0];
 
@@ -71,8 +67,8 @@ export class FileUploadDialogComponent {
             }
             this.rowData.push(row);
           }
-          console.log(this.rowData);
           this.csvRecords =  result;
+          sub.unsubscribe();
         },
         error: (error: NgxCSVParserError): void => {
           console.log('Error', error);

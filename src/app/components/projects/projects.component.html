@@ -22,6 +22,8 @@
         [columnDefs]="colDefs"
         [defaultColDef]="defaultColDef"
         (gridReady)="onGridReady($event)"
+        [loading] = "gridLoading"
         rowClass="table-row"
+        enableAdvancedFilter
     />
 </div>

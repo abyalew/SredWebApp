@@ -6,11 +6,11 @@
         <app-user-profile class="sidebar-section"></app-user-profile>
         <mat-list class="sred-mat-sidenav-menu-list">
             <div mat-subheader>GENERAL</div>
-              <mat-list-item class="sred-sidenav-menu-item text-sm sred-sidenav-menu-item-active">
+              <mat-list-item class="sred-sidenav-menu-item text-sm" routerLink="" routerLinkActive="sred-sidenav-menu-item-active">
                 <mat-icon matListItemIcon svgIcon="home_outlined"></mat-icon>
                 <div matListItemTitle>Overview</div>
               </mat-list-item>
-              <mat-list-item class="sred-sidenav-menu-item text-sm">
+              <mat-list-item class="sred-sidenav-menu-item text-sm" routerLink="projects" routerLinkActive="sred-sidenav-menu-item-active">
                 <mat-icon matListItemIcon svgIcon="store_outlined"></mat-icon>
                 <div matListItemTitle>Navigation 02</div>
               </mat-list-item>
@@ -26,7 +26,7 @@
                 <mat-icon matListItemIcon svgIcon="line_chart"></mat-icon>
                 <div matListItemTitle>Navigation 06</div>
               </mat-list-item>
-              
+
             <div mat-subheader>TOOLS</div>
               <mat-list-item class="sred-sidenav-menu-item text-sm">
                 <mat-icon matListItemIcon svgIcon="setting"></mat-icon>
@@ -57,14 +57,14 @@
               <mat-icon svgIcon="panel-close"></mat-icon>
             </button>
             <app-search-input class="sred-mat-toolbar-search-input" *ngIf="!isSmallViewPort()"></app-search-input>
-            
+
             <span class="spacer"></span>
             <app-toolbar-icon icon="search" class="sred-mat-toolbar-notification-spacing" [ngClass]="showSearchInput ? 'active' : ''"
               *ngIf="isSmallViewPort()" (clicked)="onShowSearchInput()">
             </app-toolbar-icon>
             <app-toolbar-icon svgIcon="mail_outlined" [badge]="2" class="sred-mat-toolbar-notification-spacing"></app-toolbar-icon>
             <app-toolbar-icon svgIcon="notifications_outlined" [badge]="8" class="sred-mat-toolbar-notification-spacing"></app-toolbar-icon>
-            <app-toolbar-icon icon="calendar_today" class="sred-mat-toolbar-notification-spacing" [ngClass]="showDateRangePicker ? 'active' : ''" 
+            <app-toolbar-icon icon="calendar_today" class="sred-mat-toolbar-notification-spacing" [ngClass]="showDateRangePicker ? 'active' : ''"
             *ngIf="isSmallViewPort()" (clicked)="onShowDateRangePicker()"></app-toolbar-icon>
             <mat-divider [vertical]="true"></mat-divider>
             <sred-date-range-picker *ngIf="!isSmallViewPort()"></sred-date-range-picker>

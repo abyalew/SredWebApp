@@ -6,7 +6,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatBadgeModule} from '@angular/material/badge';
-import { RouterOutlet } from '@angular/router';
+import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
@@ -24,7 +24,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-side-bar',
   standalone: true,
   imports: [RouterOutlet, MatSidenavModule, MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule, MatFormFieldModule, SredDateRangePicker, MatBadgeModule,
-    MatDividerModule, MatListModule, MatSlideToggleModule, UserProfileComponent, AppToolbarIconComponent, SearchInputComponent, MatCardModule, CommonModule],
+    MatDividerModule, MatListModule, MatSlideToggleModule, UserProfileComponent, AppToolbarIconComponent, SearchInputComponent, MatCardModule, CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss'
 })
@@ -32,8 +32,8 @@ export class SideBarComponent {
 
   responsiveService: ResponsiveService = inject(ResponsiveService);
   sideNavMode = computed(()=>{
-    if(this.responsiveService.mediumWidth() || 
-    this.responsiveService.smallWidth() || 
+    if(this.responsiveService.mediumWidth() ||
+    this.responsiveService.smallWidth() ||
     this.responsiveService.extraSmallWidth())
       return 'over';
     return 'side';

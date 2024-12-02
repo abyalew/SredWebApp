@@ -1,8 +1,8 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { Project } from '../../models/project';
 import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import { EditorFormComponent } from './editor-form/editor-form.component';
@@ -10,8 +10,14 @@ import { FileUploadDialogComponent } from '../../shared/file-upload-dialog/file-
 import {EditActionRendererComponent} from './edit-action-renderer/edit-action-renderer.component';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../state/app.state';
-import {selectAllProjects, selectEditorStatus, selectUploadStatus} from '../../state/projects/project.selector';
-import { loadProjects, openEditForm } from '../../state/projects/project.actions';
+import {
+  selectAllProjects,
+  selectEditorStatus,
+  selectProjectLoadingStatus, selectProjectSaveStatus,
+  selectUploadStatus
+} from '../../state/projects/project.selector';
+import {closeEditForm, loadProjects, openEditForm} from '../../state/projects/project.actions';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'projects',
@@ -20,10 +26,10 @@ import { loadProjects, openEditForm } from '../../state/projects/project.actions
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent implements OnInit, OnDestroy {
   readonly dialog = inject(MatDialog);
   editorDialog: MatDialogRef<EditorFormComponent> | null = null;
-
+  gridLoading: boolean = false;
   colDefs: ColDef[] = [
     { field: 'name', maxWidth: 160},
     { field: 'description' },
@@ -48,12 +54,18 @@ export class ProjectsComponent implements OnInit {
   };
 
   rowData: Project[] = [];
+  private allProjectsSelectoSub: Subscription;
+  private editorStatusSub: Subscription;
+  private loadingStatusSub: Subscription;
+  private saveStatusSub: Subscription;
+  private uploadStatusSub: Subscription | undefined;
 
   constructor(private store: Store<AppState>) {
-    this.store.select(selectAllProjects).subscribe(projects => {
+    this.allProjectsSelectoSub = this.store.select(selectAllProjects).subscribe(projects => {
       this.rowData = projects;
-    })
-    this.store.select(selectEditorStatus).subscribe(editorStatus => {
+    });
+
+    this.editorStatusSub = this.store.select(selectEditorStatus).subscribe(editorStatus => {
       if(editorStatus === 'opened') {
         this.openEditorDialog();
       }
@@ -61,11 +73,30 @@ export class ProjectsComponent implements OnInit {
         this.loadProjects();
         this.closeEditorDialog();
       }
+    });
+
+    this.loadingStatusSub = this.store.select(selectProjectLoadingStatus).subscribe(loadStatus => {
+        this.gridLoading = loadStatus === 'loading';
     })
+
+    this.saveStatusSub = this.store.select(selectProjectSaveStatus).subscribe(saveState => {
+      if(saveState === 'success') {
+        this.store.dispatch(closeEditForm());
+      }
+    });
   }
 
   ngOnInit() {
     this.loadProjects();
+  }
+
+  ngOnDestroy() {
+    this.editorStatusSub.unsubscribe();
+    this.allProjectsSelectoSub.unsubscribe();
+    this.loadingStatusSub.unsubscribe();
+    this.saveStatusSub.unsubscribe();
+    if(!this.uploadStatusSub?.closed)
+      this.uploadStatusSub?.unsubscribe();
   }
 
   onCreate(){
@@ -87,20 +118,21 @@ export class ProjectsComponent implements OnInit {
 
   openUploadDialog() {
     const dialogRef = this.dialog.open(FileUploadDialogComponent);
-    const sub = this.store.select(selectUploadStatus).subscribe(status => {
+    this.uploadStatusSub = this.store.select(selectUploadStatus).subscribe(status => {
       if(status === 'success') {
         dialogRef.close();
-        sub.unsubscribe();
+        this.uploadStatusSub?.unsubscribe();
         this.loadProjects();
       }
     })
   }
 
-  onGridReady(params: any): void {
-    params.api.sizeColumnsToFit();
+  onGridReady(event: GridReadyEvent): void {
+    event.api.sizeColumnsToFit();
   }
 
   editRow(data: any) {
+    console.log("edit triggered");
     this.store.dispatch(openEditForm({project: data}));
   }
 }

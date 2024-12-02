@@ -5,8 +5,8 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {ProjectService} from '../../services/project.service';
 import {
   addProject,
-  addProjectFailure,
-  addProjectSuccess, bulkSave, closeEditForm,
+  addProjectFailure, addProjectSuccess,
+  bulkSave, closeEditForm,
   loadProjects,
   loadProjectsFailure,
   loadProjectsSuccess
@@ -36,7 +36,7 @@ export class ProjectEffects {
       ofType(addProject),
       switchMap(project =>
         this.projectService.saveProject(project).pipe(
-          map(() => closeEditForm()),
+          map(() => addProjectSuccess(project)),
           catchError(error => of(addProjectFailure({error})))
         )
       )

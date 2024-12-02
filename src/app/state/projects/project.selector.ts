@@ -22,3 +22,13 @@ export const selectUploadStatus = createSelector(
   selectProjectsState,
   (state: ProjectState) => state.uploadStatus
 );
+
+export const selectProjectLoadingStatus = createSelector(
+  selectProjectsState,
+  (state: ProjectState) => state.loadStatus
+);
+
+export const selectProjectSaveStatus = createSelector(
+  selectProjectsState,
+  (state: ProjectState) => state.saveStatus
+);
