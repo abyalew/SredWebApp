@@ -2,9 +2,9 @@ import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef, GridOptions, GridReadyEvent } from 'ag-grid-community';
+import { ColDef, GridReadyEvent } from 'ag-grid-community';
 import { Project } from '../../models/project';
-import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { EditorFormComponent } from './editor-form/editor-form.component';
 import { FileUploadDialogComponent } from '../../shared/file-upload-dialog/file-upload-dialog.component';
 import {EditActionRendererComponent} from './edit-action-renderer/edit-action-renderer.component';
@@ -18,11 +18,13 @@ import {
 } from '../../state/projects/project.selector';
 import {closeEditForm, loadProjects, openEditForm} from '../../state/projects/project.actions';
 import {Subscription} from 'rxjs';
+import {FilterField, GridFilter, GridFilterComponent} from '../../shared/grid-filter/grid-filter.component';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'projects',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, AgGridAngular],
+  imports: [MatIconModule, MatButtonModule, AgGridAngular, GridFilterComponent, NgIf],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
@@ -30,6 +32,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   readonly dialog = inject(MatDialog);
   editorDialog: MatDialogRef<EditorFormComponent> | null = null;
   gridLoading: boolean = false;
+  showGridFilter: boolean = false;
   colDefs: ColDef[] = [
     { field: 'name', maxWidth: 160},
     { field: 'description' },
@@ -47,6 +50,16 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       maxWidth: 100,
       suppressSizeToFit: true
     },
+  ];
+  fieldFilterOptions: FilterField[] = [
+    new FilterField('name','Name',"text"),
+    new FilterField('description', 'Description', "text"),
+    new FilterField('integrationOf', 'Integration Of', "text"),
+    new FilterField('timeRecords', 'TimeRecords', "number"),
+    new FilterField('totalHours', 'Total Hours', "number"),
+    new FilterField('createdBy', 'Created By', "text"),
+    new FilterField('createdOn', 'Created On', "date"),
+    new FilterField('isIncluded', 'Is included', "boolean")
   ];
 
   defaultColDef: ColDef = {
@@ -70,7 +83,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         this.openEditorDialog();
       }
       if (editorStatus === 'closed') {
-        this.loadProjects();
+        this.loadProjects(undefined);
         this.closeEditorDialog();
       }
     });
@@ -87,7 +100,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadProjects();
+    this.loadProjects(undefined);
   }
 
   ngOnDestroy() {
@@ -103,8 +116,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.store.dispatch(openEditForm({ project: null }));
   }
 
-  loadProjects(): void {
-    this.store.dispatch(loadProjects());
+  loadProjects(filters: GridFilter | undefined): void {
+    this.store.dispatch(loadProjects({ filters: filters }));
   }
 
   openEditorDialog(project: Project | null = null) {
@@ -122,7 +135,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       if(status === 'success') {
         dialogRef.close();
         this.uploadStatusSub?.unsubscribe();
-        this.loadProjects();
+        this.loadProjects(undefined);
       }
     })
   }
@@ -134,5 +147,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   editRow(data: any) {
     console.log("edit triggered");
     this.store.dispatch(openEditForm({project: data}));
+  }
+
+  toggleGridFilter() {
+    this.showGridFilter = !this.showGridFilter;
+    if(!this.showGridFilter)
+      this.loadProjects(undefined);
   }
 }

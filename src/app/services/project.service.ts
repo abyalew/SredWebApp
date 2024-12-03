@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SimpleObject} from './dashboard.service';
 import {Project} from '../models/project';
+import {GridFilter} from '../shared/grid-filter/grid-filter.component';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,17 @@ import {Project} from '../models/project';
 export class ProjectService {
   constructor(private readonly httpClient : HttpClient){}
   baseUrl: string = "https://localhost:7059/Projects/";
-  getAllProjects() : Observable<Project[]> {
-    return this.httpClient.get<Project[]>("https://localhost:7059/Projects/GetProjects");
+  getAllProjects(filter : GridFilter | undefined) : Observable<Project[]> {
+    let params: {[param: string]: string} = { };
+    console.log(filter);
+    if(filter) {
+      for(let key in filter.filter) {
+        if(filter.filter[key].value)
+          params[key] = filter.filter[key].value ?? '';
+      }
+    }
+    console.log(params);
+    return this.httpClient.get<Project[]>("https://localhost:7059/Projects/GetProjects", { params: params}, );
   }
   saveProject(project: Project) : Observable<Project> {
     const url = this.baseUrl + (project.id ? 'update' : 'AddProject');

@@ -1,7 +1,8 @@
 import {Project} from '../../models/project';
 import {createAction, props} from '@ngrx/store';
+import {GridFilter} from '../../shared/grid-filter/grid-filter.component';
 
-export const loadProjects = createAction('[Project Page] Load Projects');
+export const loadProjects = createAction('[Project Page] Load Projects', props<{ filters: GridFilter | undefined }>());
 export const loadProjectsSuccess = createAction('[Project Page] Load Projects Success', props<{ projects: Project[] }>());
 export const loadProjectsFailure = createAction('[Project Page] Load Projects Failure', props<{ error: string }>());
 export const openEditForm = createAction('[Project Page] Open Edit Form',props<{ project : Project | null }>());

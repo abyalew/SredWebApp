@@ -22,8 +22,8 @@ export class ProjectEffects {
   loadProjects$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadProjects),
-      switchMap(() =>
-        this.projectService.getAllProjects().pipe(
+      switchMap(({ filters }) =>
+        this.projectService.getAllProjects(filters).pipe(
           map(projects => loadProjectsSuccess({ projects })),
           catchError(error => of(loadProjectsFailure({error})))
         )

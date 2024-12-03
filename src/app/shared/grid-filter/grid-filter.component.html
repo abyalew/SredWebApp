@@ -1,0 +1,55 @@
+<div class="p-1 "></div>
+
+<mat-card appearance="outlined" class="mb-2 grid-filter-card">
+  <mat-card-content>
+    <div class="flex items-center space-x-4">
+      <mat-form-field appearance="outline" class="flex-none w-64" subscriptSizing="dynamic">
+        <mat-select [(ngModel)]="selectedField" name="selectedField">
+          <mat-option *ngFor="let field of filterOptions" [value]="field">
+            {{ field.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="flex-none w-40" subscriptSizing="dynamic" *ngIf="selectedField !== undefined">
+        <mat-select *ngIf="selectedField" [(ngModel)]="filter.filter![selectedField!.name].predicate">
+          <mat-option *ngFor="let predicate of filterPredicateOptions" [value]="predicate.key">
+            {{ predicate.value }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div [ngSwitch]="selectedField.type" *ngIf="selectedField" class="flex-initial w-80">
+        <mat-form-field appearance="outline" *ngSwitchCase="'text'" class="w-full" subscriptSizing="dynamic" (focusout)="updateFilter()">
+          <input matInput type="text" [(ngModel)]="filter.filter![selectedField.name]!.value"/>
+        </mat-form-field>
+        <mat-checkbox *ngSwitchCase="'boolean'" [checked]="filter.filter![selectedField.name]"
+                      [(ngModel)]="filter.filter![selectedField.name].value" (focusout)="updateFilter()">
+        </mat-checkbox>
+
+        <mat-form-field appearance="outline" *ngSwitchCase="'number'" class="w-full" subscriptSizing="dynamic" (focusout)="updateFilter()">
+          <input matInput type="number" [(ngModel)]="filter.filter![selectedField.name].value">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngSwitchCase="'select'" class="w-full" subscriptSizing="dynamic" (focusout)="updateFilter()">
+          <mat-select [(ngModel)]="filter.filter![selectedField.name].value" name="selectedField">
+            <mat-option *ngFor="let opt of selectedField?.filterOptions" [value]="opt.key">
+              {{ opt.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <mat-chip-set aria-label="Fish selection">
+        @for(item of appliedFilters | keyvalue; track item.key){
+          <mat-chip *ngIf="item.value.value">
+            {{ item.key + ': ' + item.value.predicate + ' ' + item.value.value }}
+            <button matChipRemove [attr.aria-label]="'remove'" (click)="removeFilter(item.key)">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        }
+      </mat-chip-set>
+    </div>
+  </mat-card-content>
+</mat-card>
