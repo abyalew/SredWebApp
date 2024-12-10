@@ -3,14 +3,19 @@ import {createSelector} from '@ngrx/store';
 import {ProjectState} from './project.reducer';
 
 export const selectProjectsState = (state: AppState) => state.projects;
-export const selectAllProjects = createSelector(
+export const selectProjectPage = createSelector(
   selectProjectsState,
-  (state: ProjectState) => state.projects
+  (state: ProjectState) => state.page
 );
 
 export const selectEditorStatus = createSelector(
   selectProjectsState,
   (state: ProjectState) => state.editorFormStatus
+);
+
+export const selectConfirmationDialogStatus = createSelector(
+  selectProjectsState,
+  (state: ProjectState) => state.confirmationDialogStatus
 );
 
 export const selectProjectOnEdit = createSelector(
@@ -30,5 +35,15 @@ export const selectProjectLoadingStatus = createSelector(
 
 export const selectProjectSaveStatus = createSelector(
   selectProjectsState,
-  (state: ProjectState) => state.saveStatus
+  (state: ProjectState) => {
+    return { status:  state.saveStatus, error: state.saveError };
+  }
 );
+
+export const selectProjectDeleteStatus = createSelector(
+  selectProjectsState,
+  (state: ProjectState) => {
+    return { status:  state.deleteStatus, error: state.deleteError };
+  }
+);
+

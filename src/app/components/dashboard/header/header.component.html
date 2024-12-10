@@ -4,7 +4,7 @@
             <span class="semibold-heading-5">
                 Welcome Back, John Doe!
             </span>
-            <button mat-raised-button disabled class="medium-text-sm">Jan 01, 2023 - Dec 31, 2023 </button>
+            <button mat-raised-button disabled class="medium-text-sm">{{ currentFiscalPeriod?.startDate | date }} - {{ currentFiscalPeriod?.endDate | date }} </button>
         </div>
         <span class="spacer"></span>
         <button mat-button class="btn-primary icon-only" (click)="refreshEventService.triggerRefresh(undefined)">

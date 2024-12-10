@@ -1,25 +1,29 @@
 <div class="flex flex-row mb-10">
-    <div>
-        <span class="semibold-heading-5">
-            Test Client
-        </span>
+    <div class="flex flex-col">
+      <span class="semibold-heading-5">
+          Charm Games
+      </span>
+      <button mat-raised-button disabled class="medium-text-sm">{{ currentFiscalPeriod?.startDate | date }} - {{ currentFiscalPeriod?.endDate | date }}</button>
     </div>
-    <span class="spacer"></span>
-    <button mat-flat-button class="mr-1" (click)="onCreate()">
-        <span class="hidden sm:block">Create</span>
-        <mat-icon>add</mat-icon>
-    </button>
-    <button mat-stroked-button (click)="openUploadDialog()">
-      <span class="hidden sm:block">Upload CSV</span>
+  <span class="spacer"></span>
+  <button mat-flat-button class="mr-1" (click)="onCreate()">
+      <span class="hidden sm:block">Create</span>
+      <mat-icon>add</mat-icon>
+  </button>
+  <button mat-stroked-button (click)="openUploadDialog()">
+    <span class="hidden sm:block">Upload CSV</span>
 
-        <mat-icon>publish</mat-icon>
-    </button>
+      <mat-icon>publish</mat-icon>
+  </button>
   <button mat-icon-button (click)="toggleGridFilter()" class="ml-2">
     <mat-icon>filter_alt</mat-icon>
   </button>
+  <button mat-icon-button (click)="loadProjects(undefined, pagination)" class="ml-2">
+    <mat-icon>refresh</mat-icon>
+  </button>
 </div>
 
-<grid-filter [filterOptions]="fieldFilterOptions" (changed)="loadProjects($event)" *ngIf="showGridFilter"></grid-filter>
+<grid-filter [filterOptions]="fieldFilterOptions" (changed)="loadProjects($event, pagination)" *ngIf="showGridFilter"></grid-filter>
 <div class="flex flex-col table-container">
     <ag-grid-angular
         class="ag-theme-quartz table"
@@ -28,6 +32,13 @@
         [defaultColDef]="defaultColDef"
         (gridReady)="onGridReady($event)"
         [loading] = "gridLoading"
+        [domLayout]="'autoHeight'"
         rowClass="table-row"
     />
+    <mat-paginator [length]="100"
+                   [pageSize]="pageData.pageSize"
+                   [pageIndex]="pageData.currentPage-1"
+                   [pageSizeOptions]="[5, 10, 25, 100]"
+                   aria-label="Select page" (page)="onPaginationChanged($event)">
+    </mat-paginator>
 </div>

@@ -8,6 +8,8 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import {projectReducer} from './state/projects/project.reducer';
 import {ProjectEffects} from './state/projects/project.effects';
+import {fiscalPeriodReducer} from './state/fiscalPeriod/fiscalPeriod.reducer';
+import {FiscalPeriodEffects} from './state/fiscalPeriod/fiscalPeriod.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection(
@@ -15,6 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(),
-    provideStore({ projects: projectReducer }),
-    provideEffects(ProjectEffects)]
+    provideStore({ projects: projectReducer, fiscalPeriods: fiscalPeriodReducer }),
+    provideEffects(ProjectEffects, FiscalPeriodEffects)]
 };

@@ -70,7 +70,10 @@ export class GridFilterComponent implements OnInit {
     }
   }
 
-  updateFilter() {
+  updateFilter(event: any | null) {
+    if(event && !event.target?.value){
+      return;
+    }
     this.appliedFilters = {};
     let filter: { [key: string] : { value: string | undefined, predicate: 'contains' | 'equals' | 'differentFrom' | undefined  } } = {};
     for (let key in this.filter.filter) {
@@ -84,6 +87,6 @@ export class GridFilterComponent implements OnInit {
 
   removeFilter(key: string) {
     this.filter.filter![key] = { value: undefined, predicate: 'contains' };
-    this.updateFilter();
+    this.updateFilter(null);
   }
 }

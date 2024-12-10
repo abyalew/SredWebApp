@@ -10,3 +10,4 @@ export interface Project
     totalHours: string | undefined | null;
     timeRecords: string | undefined | null;
 }
+

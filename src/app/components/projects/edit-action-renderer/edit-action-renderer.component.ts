@@ -12,6 +12,9 @@ import {MatButtonModule} from '@angular/material/button';
     <button mat-icon-button aria-label="Edit" (click)="clicked()">
       <mat-icon>edit_outlined</mat-icon>
     </button>
+    <button mat-icon-button aria-label="Edit" (click)="delete()">
+      <mat-icon>delete_outlined</mat-icon>
+    </button>
   `,
   styleUrl: './edit-action-renderer.component.scss'
 })
@@ -28,6 +31,12 @@ export class EditActionRendererComponent implements ICellRendererAngularComp {
   clicked(): any {
     if (this.params?.onEdit) {
       this.params.onEdit(this.params.data);
+    }
+  }
+
+  delete(): any {
+    if (this.params?.onDelete) {
+      this.params.onDelete(this.params.data);
     }
   }
 

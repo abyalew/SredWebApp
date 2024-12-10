@@ -19,18 +19,17 @@
         </mat-select>
       </mat-form-field>
       <div [ngSwitch]="selectedField.type" *ngIf="selectedField" class="flex-initial w-80">
-        <mat-form-field appearance="outline" *ngSwitchCase="'text'" class="w-full" subscriptSizing="dynamic" (focusout)="updateFilter()">
+        <mat-form-field appearance="outline" *ngSwitchCase="'text'" class="w-full" subscriptSizing="dynamic" (focusout)="updateFilter($event)">
           <input matInput type="text" [(ngModel)]="filter.filter![selectedField.name]!.value"/>
         </mat-form-field>
         <mat-checkbox *ngSwitchCase="'boolean'" [checked]="filter.filter![selectedField.name]"
-                      [(ngModel)]="filter.filter![selectedField.name].value" (focusout)="updateFilter()">
+                      [(ngModel)]="filter.filter![selectedField.name].value" (focusout)="updateFilter($event)">
         </mat-checkbox>
 
-        <mat-form-field appearance="outline" *ngSwitchCase="'number'" class="w-full" subscriptSizing="dynamic" (focusout)="updateFilter()">
+        <mat-form-field appearance="outline" *ngSwitchCase="'number'" class="w-full" subscriptSizing="dynamic" (focusout)="updateFilter($event)">
           <input matInput type="number" [(ngModel)]="filter.filter![selectedField.name].value">
         </mat-form-field>
-
-        <mat-form-field appearance="outline" *ngSwitchCase="'select'" class="w-full" subscriptSizing="dynamic" (focusout)="updateFilter()">
+        <mat-form-field appearance="outline" *ngSwitchCase="'select'" class="w-full" subscriptSizing="dynamic" (focusout)="updateFilter($event)">
           <mat-select [(ngModel)]="filter.filter![selectedField.name].value" name="selectedField">
             <mat-option *ngFor="let opt of selectedField?.filterOptions" [value]="opt.key">
               {{ opt.value }}

@@ -1,5 +1,8 @@
 <h2 mat-dialog-title>{{ editMode ? 'Edit Project' : 'Create Project' }}</h2>
 <mat-dialog-content>
+  <mat-card appearance="outlined" class="alert-card mx-2 mb-2" *ngIf="saveStatus?.status === 'error'">
+    <mat-card-content>{{ saveStatus?.error }}</mat-card-content>
+  </mat-card>
     <form [formGroup]="projectForm" (ngSubmit)="submit()" class="flex flex-col space-y-3 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 p-2">
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>

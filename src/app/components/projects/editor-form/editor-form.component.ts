@@ -13,11 +13,22 @@ import {AppState} from '../../../state/app.state';
 import {addProject, closeEditForm} from '../../../state/projects/project.actions';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {Subscription} from 'rxjs';
+import {MatCardModule} from '@angular/material/card';
 
 @Component({
   selector: 'project-editor-form',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, ReactiveFormsModule, MatProgressSpinnerModule],
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
+    MatCardModule
+  ],
   templateUrl: './editor-form.component.html',
   styleUrl: './editor-form.component.scss'
 })
@@ -25,6 +36,7 @@ export class EditorFormComponent implements OnDestroy {
 
   @Output() submitted = new EventEmitter();
   loading: boolean = false;
+  saveStatus: { status: 'pending' | 'loading' | 'error' | 'success', error: string | null } | null = null;
   private onEditSubscription: Subscription | undefined;
   private saveStatusSubscription: Subscription | undefined;
 
@@ -42,7 +54,8 @@ export class EditorFormComponent implements OnDestroy {
       }
     });
     this.saveStatusSubscription = this.store.select(selectProjectSaveStatus).subscribe(saveState => {
-      switch(saveState) {
+      this.saveStatus = {...saveState };
+      switch(saveState.status) {
         case 'success':
           this.loading = false;
           return;

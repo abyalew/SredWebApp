@@ -5,19 +5,34 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {ProjectService} from '../../services/project.service';
 import {
   addProject,
-  addProjectFailure, addProjectSuccess,
-  bulkSave, closeEditForm,
+  addProjectFailure,
+  addProjectSuccess,
+  bulkSave, closeConfirmationDialog,
+  closeEditForm,
+  deleteProject, deleteProjectFailure,
+  deleteProjectSuccess,
+  loadProjectPage,
+  loadProjectPageFailure,
+  loadProjectPageSuccess,
   loadProjects,
   loadProjectsFailure,
   loadProjectsSuccess
 } from './project.actions';
 import {catchError, map, of, switchMap, pipe} from 'rxjs';
+import {selectCurrentFiscalPeriod} from '../fiscalPeriod/fiscalPeriod.selector';
+import {FiscalPeriod} from '../../models/fiscalPeriod';
 
 @Injectable()
 export class ProjectEffects {
 
   actions$ = inject(Actions);
-  constructor(private store: Store<AppState>, private projectService: ProjectService) {}
+  currentFiscalPeriod: FiscalPeriod | null = null;
+  constructor(private store: Store<AppState>, private projectService: ProjectService) {
+    this.store.select(selectCurrentFiscalPeriod).subscribe(fp=>{
+      if(fp)
+        this.currentFiscalPeriod = { ...fp };
+    })
+  }
 
   loadProjects$ = createEffect(() =>
     this.actions$.pipe(
@@ -31,13 +46,25 @@ export class ProjectEffects {
     )
   )
 
+  loadProjectPage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadProjectPage),
+      switchMap(({ filters, pagination }) =>
+        this.projectService.getPage(this.currentFiscalPeriod, filters, pagination).pipe(
+          map(projects => loadProjectPageSuccess({ projects })),
+          catchError(error => of(loadProjectPageFailure({error})))
+        )
+      )
+    )
+  )
+
   saveProject$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProject),
       switchMap(project =>
         this.projectService.saveProject(project).pipe(
           map(() => addProjectSuccess(project)),
-          catchError(error => of(addProjectFailure({error})))
+          catchError(error  => of(addProjectFailure({ error: 'Something went wrong. please try again.' })))
         )
       )
     )
@@ -55,5 +82,15 @@ export class ProjectEffects {
     )
   )
 
-
+  deleteProject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteProject),
+      switchMap(({ project }) =>
+        this.projectService.deleteProject(project!.id as number).pipe(
+          map(() => deleteProjectSuccess({ success: true })),
+          catchError(error => of(deleteProjectFailure({ error: error.message })))
+        )
+      )
+    )
+  )
 }

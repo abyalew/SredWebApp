@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import {Component, computed, inject, OnDestroy, OnInit} from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -19,18 +19,53 @@ import { SearchInputComponent } from '../../shared/search-input/search-input.com
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResponsiveService } from '../../services/responsive.service';
 import { CommonModule } from '@angular/common';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../state/app.state';
+import {loadFiscalPeriods, setCurrentFiscalPeriod} from '../../state/fiscalPeriod/fiscalPeriod.actions';
+import {selectAllFiscalPeriods, selectCurrentFiscalPeriod} from '../../state/fiscalPeriod/fiscalPeriod.selector';
+import {MatOption} from '@angular/material/core';
+import {MatSelect} from '@angular/material/select';
+import {FormsModule} from '@angular/forms';
+import {FiscalPeriod} from '../../models/fiscalPeriod';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-side-bar',
   standalone: true,
-  imports: [RouterOutlet, MatSidenavModule, MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule, MatFormFieldModule, SredDateRangePicker, MatBadgeModule,
-    MatDividerModule, MatListModule, MatSlideToggleModule, UserProfileComponent, AppToolbarIconComponent, SearchInputComponent, MatCardModule, CommonModule, RouterLink, RouterLinkActive],
+  imports: [
+    RouterOutlet,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
+    SredDateRangePicker,
+    MatBadgeModule,
+    MatDividerModule,
+    MatListModule,
+    MatSlideToggleModule,
+    UserProfileComponent,
+    AppToolbarIconComponent,
+    SearchInputComponent,
+    MatCardModule,
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    MatOption,
+    MatSelect,
+    FormsModule],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss'
 })
-export class SideBarComponent {
+export class SideBarComponent implements OnInit, OnDestroy {
 
   responsiveService: ResponsiveService = inject(ResponsiveService);
+  fiscalPeriods: FiscalPeriod[] = [];
+  fiscalPeriodOpts: { key: number | null | undefined; value: string }[] | null = null;
+  selectedFiscalPeriodId: number | null | undefined = null;
+  selectAllFiscalPeriodsSub: Subscription | null = null;
+  selectCurrentFiscalPeriodSub: Subscription | null = null;
   sideNavMode = computed(()=>{
     if(this.responsiveService.mediumWidth() ||
     this.responsiveService.smallWidth() ||
@@ -44,7 +79,7 @@ export class SideBarComponent {
   });
   showSearchInput: boolean = false;
   showDateRangePicker: boolean = false;
-  constructor() {
+  constructor(private store: Store<AppState>) {
     const iconRegistry = inject(MatIconRegistry);
     const sanitizer = inject(DomSanitizer);
     iconRegistry.addSvgIcon('panel-close', sanitizer.bypassSecurityTrustResourceUrl('/panel-close.svg'));
@@ -62,6 +97,25 @@ export class SideBarComponent {
 
   }
 
+  ngOnInit() {
+    this.store.dispatch(loadFiscalPeriods());
+    this.selectAllFiscalPeriodsSub = this.store.select(selectAllFiscalPeriods).subscribe(fiscalPeriods => {
+      this.fiscalPeriods = fiscalPeriods;
+      this.fiscalPeriodOpts = fiscalPeriods.map(fs => {
+        return { key: fs.id, value: `${fs.startDate?.toString().split('T')[0]} - ${fs.endDate?.toString().split('T')[0]}`};
+      });
+      this.store.dispatch(setCurrentFiscalPeriod({ fiscalPeriod: fiscalPeriods[0] }));
+    });
+    this.selectCurrentFiscalPeriodSub = this.store.select(selectCurrentFiscalPeriod).subscribe(fiscalPeriod => {
+      this.selectedFiscalPeriodId = fiscalPeriod?.id;
+    });
+  }
+
+  ngOnDestroy() {
+    this.selectAllFiscalPeriodsSub?.unsubscribe();
+    this.selectCurrentFiscalPeriodSub?.unsubscribe();
+  }
+
   onShowSearchInput() {
     this.showDateRangePicker = false;
     this.showSearchInput = !this.showSearchInput;
@@ -70,5 +124,11 @@ export class SideBarComponent {
   onShowDateRangePicker() {
     this.showSearchInput = false;
     this.showDateRangePicker = !this.showDateRangePicker;
+  }
+
+  fiscalPeriodChanged(){
+    const fp = this.fiscalPeriods.find(fp=>fp.id === this.selectedFiscalPeriodId);
+    if(fp)
+      this.store.dispatch(setCurrentFiscalPeriod({ fiscalPeriod: fp }));
   }
 }

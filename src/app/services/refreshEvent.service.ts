@@ -3,8 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 
 
 export interface FilterParam{
-  dateFrom: Date | undefined;
-  dateTo: Date | undefined;
+  dateFrom: Date | null | undefined;
+  dateTo: Date | null | undefined;
 }
 @Injectable({
     providedIn: 'root'
