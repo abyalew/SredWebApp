@@ -9,5 +9,6 @@ export interface Project
     description: string | undefined | null;
     totalHours: string | undefined | null;
     timeRecords: string | undefined | null;
+    isDeleted: boolean | undefined | null;
 }
 

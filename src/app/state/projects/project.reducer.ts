@@ -9,7 +9,7 @@ import {
   loadProjectPage,
   loadProjectPageFailure,
   loadProjectPageSuccess,
-  openEditForm,
+  openEditForm, restoreProject, restoreProjectFailure, restoreProjectSuccess,
 } from './project.actions';
 import {Page} from '../../services/project.service';
 
@@ -63,6 +63,12 @@ export const projectReducer = createReducer(
   on(deleteProjectSuccess, (state, content): ProjectState => ({
     ...state, deleteStatus: 'success', })),
   on(deleteProjectFailure, (state, { error }): ProjectState => ({
+    ...state, deleteStatus: 'error', deleteError: error })),
+  on(restoreProject, (state, content): ProjectState => ({
+    ...state, deleteStatus: 'loading', })),
+  on(restoreProjectSuccess, (state, content): ProjectState => ({
+    ...state, deleteStatus: 'success', })),
+  on(restoreProjectFailure, (state, { error }): ProjectState => ({
     ...state, deleteStatus: 'error', deleteError: error })),
   on(bulkSave, (state, content): ProjectState => ({
     ...state, uploadStatus: 'loading', })),

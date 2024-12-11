@@ -7,7 +7,7 @@ export const loadProjects = createAction('[Project Page] Load Projects', props<{
 export const loadProjectsSuccess = createAction('[Project Page] Load Projects Success', props<{ projects: Project[] }>());
 export const loadProjectsFailure = createAction('[Project Page] Load Projects Failure', props<{ error: string }>());
 
-export const loadProjectPage = createAction('[Project Page] Load Page', props<{ pagination: PageParam, filters: GridFilter | undefined }>());
+export const loadProjectPage = createAction('[Project Page] Load Page', props<{ showArchived: boolean, pagination: PageParam, filters: GridFilter | undefined }>());
 export const loadProjectPageSuccess = createAction('[Project Page] Load Page Success', props<{ projects: Page<Project> }>());
 export const loadProjectPageFailure = createAction('[Project Page] Load Page Failure', props<{ error: string }>());
 
@@ -17,6 +17,9 @@ export const closeConfirmationDialog = createAction('[Project Page] Close Confir
 export const deleteProject = createAction('[Project Page] Delete Project', props<{ project : Project | null }>());
 export const deleteProjectSuccess = createAction('[Project Page] Delete Project Success', props<{ success: boolean }>());
 export const deleteProjectFailure = createAction('[Project Page] Delete Project Failure', props<{ error: string }>());
+export const restoreProject = createAction('[Project Page] Restore Project', props<{ project : Project | null }>());
+export const restoreProjectSuccess = createAction('[Project Page] Delete Project Success', props<{ success: boolean }>());
+export const restoreProjectFailure = createAction('[Project Page] Delete Project Failure', props<{ error: string }>());
 export const addProject = createAction('[Project Page] Add Project',props<Project>());
 export const addProjectSuccess = createAction('[Project Page] Add Project Success',props<Project>());
 export const addProjectFailure = createAction('[Project Page] Add Project Failure',props<{ error: string }>());

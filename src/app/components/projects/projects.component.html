@@ -6,6 +6,7 @@
       <button mat-raised-button disabled class="medium-text-sm">{{ currentFiscalPeriod?.startDate | date }} - {{ currentFiscalPeriod?.endDate | date }}</button>
     </div>
   <span class="spacer"></span>
+  <mat-checkbox class="mr-2" (change)="onShowArchivedChange($event)">Show Archived</mat-checkbox>
   <button mat-flat-button class="mr-1" (click)="onCreate()">
       <span class="hidden sm:block">Create</span>
       <mat-icon>add</mat-icon>
@@ -24,6 +25,7 @@
 </div>
 
 <grid-filter [filterOptions]="fieldFilterOptions" (changed)="loadProjects($event, pagination)" *ngIf="showGridFilter"></grid-filter>
+
 <div class="flex flex-col table-container">
     <ag-grid-angular
         class="ag-theme-quartz table"

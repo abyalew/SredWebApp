@@ -16,7 +16,7 @@ import {
   loadProjectPageSuccess,
   loadProjects,
   loadProjectsFailure,
-  loadProjectsSuccess
+  loadProjectsSuccess, restoreProject, restoreProjectFailure, restoreProjectSuccess
 } from './project.actions';
 import {catchError, map, of, switchMap, pipe} from 'rxjs';
 import {selectCurrentFiscalPeriod} from '../fiscalPeriod/fiscalPeriod.selector';
@@ -49,8 +49,8 @@ export class ProjectEffects {
   loadProjectPage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadProjectPage),
-      switchMap(({ filters, pagination }) =>
-        this.projectService.getPage(this.currentFiscalPeriod, filters, pagination).pipe(
+      switchMap(({ showArchived, filters, pagination }) =>
+        this.projectService.getPage(showArchived, this.currentFiscalPeriod, filters, pagination).pipe(
           map(projects => loadProjectPageSuccess({ projects })),
           catchError(error => of(loadProjectPageFailure({error})))
         )
@@ -89,6 +89,18 @@ export class ProjectEffects {
         this.projectService.deleteProject(project!.id as number).pipe(
           map(() => deleteProjectSuccess({ success: true })),
           catchError(error => of(deleteProjectFailure({ error: error.message })))
+        )
+      )
+    )
+  )
+
+  restoreProject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(restoreProject),
+      switchMap(({ project }) =>
+        this.projectService.restoreProject(project!.id as number).pipe(
+          map(() => restoreProjectSuccess({ success: true })),
+          catchError(error => of(restoreProjectFailure({ error: error.message })))
         )
       )
     )

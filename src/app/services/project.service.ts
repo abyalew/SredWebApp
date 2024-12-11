@@ -4,6 +4,7 @@ import {Observable, of} from 'rxjs';
 import {Project} from '../models/project';
 import {GridFilter} from '../shared/grid-filter/grid-filter.component';
 import {FiscalPeriod} from '../models/fiscalPeriod';
+import {restoreProject} from '../state/projects/project.actions';
 
 export interface PageParam {
   currentPage: number;
@@ -24,7 +25,9 @@ export class ProjectService {
   constructor(private readonly httpClient : HttpClient){}
   baseUrl: string = "https://localhost:7059/Projects/";
 
-  getPage(currentFiscalPeriod: FiscalPeriod | null, filter: GridFilter | undefined, param : PageParam | undefined) : Observable<Page<Project>> {
+  getPage(showArchived: boolean, currentFiscalPeriod: FiscalPeriod | null,
+          filter: GridFilter | undefined,
+          param : PageParam | undefined) : Observable<Page<Project>> {
     let params: {[param: string]: string} = { };
 
     if(!currentFiscalPeriod || !param) {
@@ -39,7 +42,7 @@ export class ProjectService {
     params['fiscalPeriodId'] = currentFiscalPeriod.id!.toString();
     params['currentPage'] = param.currentPage.toString();
     params['pageSize'] = param.pageSize.toString();
-
+    params['showArchived'] = showArchived.toString();
     if(filter) {
       let filters = [];
       for(let key in filter.filter) {
@@ -55,15 +58,13 @@ export class ProjectService {
 
   getAllProjects(filter : GridFilter | undefined) : Observable<Project[]> {
     let params: {[param: string]: string} = { };
-    console.log(filter);
     if(filter) {
       for(let key in filter.filter) {
         if(filter.filter[key].value)
           params[key] = filter.filter[key].value ?? '';
       }
     }
-    console.log(params);
-    return this.httpClient.get<Project[]>("https://localhost:7059/Projects/GetProjects", { params: params}, );
+    return this.httpClient.get<Project[]>(`${ this.baseUrl }GetProjects`, { params: params}, );
   }
   saveProject(project: Project) : Observable<Project> {
     const url = this.baseUrl + (project.id ? 'update' : 'AddProject');
@@ -77,6 +78,13 @@ export class ProjectService {
 
   deleteProject(projectId: number) : Observable<any> {
     const url = this.baseUrl + 'delete';
+    let params: { [key: string]: string } = { };
+    params['id'] = projectId.toString();
+    return this.httpClient.get(url, { params: params });
+  }
+
+  restoreProject(projectId: number) : Observable<any> {
+    const url = this.baseUrl + 'restore';
     let params: { [key: string]: string } = { };
     params['id'] = projectId.toString();
     return this.httpClient.get(url, { params: params });

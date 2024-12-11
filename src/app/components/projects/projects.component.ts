@@ -14,9 +14,15 @@ import {
   selectProjectPage,
   selectEditorStatus,
   selectProjectLoadingStatus, selectProjectSaveStatus,
-  selectUploadStatus, selectProjectDeleteStatus, selectConfirmationDialogStatus
+  selectUploadStatus, selectConfirmationDialogStatus
 } from '../../state/projects/project.selector';
-import { closeEditForm, loadProjectPage, openEditForm } from '../../state/projects/project.actions';
+import {
+  closeEditForm,
+  deleteProject,
+  loadProjectPage,
+  openEditForm,
+  restoreProject
+} from '../../state/projects/project.actions';
 import {Subscription} from 'rxjs';
 import {FilterField, GridFilter, GridFilterComponent} from '../../shared/grid-filter/grid-filter.component';
 import {DatePipe, NgIf} from '@angular/common';
@@ -25,11 +31,14 @@ import {FiscalPeriod} from '../../models/fiscalPeriod';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {Page, PageParam} from '../../services/project.service';
 import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'projects',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, AgGridAngular, GridFilterComponent, NgIf, DatePipe, MatPaginatorModule],
+  imports: [MatIconModule, MatButtonModule, AgGridAngular, GridFilterComponent, NgIf, DatePipe, MatPaginatorModule, MatCheckboxModule, FormsModule],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
@@ -51,7 +60,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     { field: 'Action', cellRenderer: EditActionRendererComponent,
       cellRendererParams: {
         onEdit: (params: any) => this.editRow(params),
-        onDelete: (params: any) => this.deleteRow(params)
+        onDelete: (params: any) => this.deleteRow(params),
+        onRestore: (data: any) => this.restoreRow(data)
       },
       width: 90,
       maxWidth: 115,
@@ -91,13 +101,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     pageSize: 10,
     totalPages: 100
   };
-  totalPages: number = 0;
+  showArchived: boolean = false;
   private selectConfirmationDialogStatusSub: Subscription;
   constructor(private store: Store<AppState>) {
     this.allProjectsSelectoSub = this.store.select(selectProjectPage).subscribe(data => {
       this.rowData = data.list;
       this.pageData = data;
-      this.totalPages = data.totalPages;
     });
 
     this.editorStatusSub = this.store.select(selectEditorStatus).subscribe(editorStatus => {
@@ -159,7 +168,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     if(filters)
       this.filters = filters;
     if(this.currentFiscalPeriod){
-      this.store.dispatch(loadProjectPage({ filters: this.filters, pagination:  pagination}));
+      this.store.dispatch(loadProjectPage({ showArchived: this.showArchived, filters: this.filters, pagination:  pagination}));
     }
   }
 
@@ -204,7 +213,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   deleteRow(data: any) {
-    const config = { data };
+    const config = { data: {data, title: 'Confirm Delete', message: 'Please confirm delete', action: deleteProject({ project: data }) }};
+    this.openConfirmationDialog(config);
+  }
+
+  restoreRow(data: any) {
+    const config = { data: {data, title: 'Confirm Restore', message: 'Please confirm restore', action: restoreProject({ project: data }) }};
     this.openConfirmationDialog(config);
   }
 
@@ -216,6 +230,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   onPaginationChanged(event: any) {
     this.pagination = { pageSize: event.pageSize, currentPage: ++event.pageIndex };
+    this.loadProjects(this.filters, this.pagination);
+  }
+
+  onShowArchivedChange(event: MatCheckboxChange) {
+    this.showArchived = event.checked;
     this.loadProjects(this.filters, this.pagination);
   }
 }

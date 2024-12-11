@@ -7,10 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {CommonModule} from '@angular/common';
 import {Project} from '../../../models/project';
-import {Store} from '@ngrx/store';
+import {Action, Store} from '@ngrx/store';
 import { selectProjectDeleteStatus } from '../../../state/projects/project.selector';
 import {AppState} from '../../../state/app.state';
-import {closeConfirmationDialog, deleteProject, deleteProjectSuccess} from '../../../state/projects/project.actions';
+import {closeConfirmationDialog} from '../../../state/projects/project.actions';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {Subscription} from 'rxjs';
 import {MatCardModule} from '@angular/material/card';
@@ -33,13 +33,17 @@ import {MatCardModule} from '@angular/material/card';
   styleUrl: './confirmation-dialog.component.scss'
 })
 export class ConfirmationDialogComponent implements OnDestroy {
-
   @Output() submitted = new EventEmitter();
   loading: boolean = false;
   saveStatus: { status: 'pending' | 'loading' | 'error' | 'success', error: string | null } | null = null;
   private deleteStatusSubscription: Subscription | undefined;
-  readonly data = inject<Project>(MAT_DIALOG_DATA);
-  readonly project = model(this.data);
+  readonly data = inject(MAT_DIALOG_DATA);
+  readonly project = model(this.data.data);
+  readonly title = model(this.data.title);
+  readonly message = model(this.data.message);
+  readonly action = model(this.data.action);
+
+
   constructor(private store: Store<AppState>) {
     this.deleteStatusSubscription = this.store.select(selectProjectDeleteStatus).subscribe(saveState => {
       this.saveStatus = {...saveState };
@@ -68,6 +72,6 @@ export class ConfirmationDialogComponent implements OnDestroy {
   }
 
   submit() {
-    this.store.dispatch(deleteProject({ project: this.project() }));
+    this.store.dispatch(this.action());
   }
 }
